@@ -1,0 +1,1 @@
+gradlew.bat -i bootRun --args='--spring.profiles.active=dev'

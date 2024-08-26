@@ -1,0 +1,29 @@
+services:
+  frontend:
+    environment:
+      SPRING_PROFILE: prod
+    image: javaoleg/micros-frontend:2024.0.0
+  gateway:
+    environment:
+      SPRING_PROFILE: prod
+    image: javaoleg/micros-gateway:2024.0.0
+  quiz:
+    image: javaoleg/micros-quiz:2024.0.0
+    environment:
+      SPRING_PROFILE: prod
+  gamification:
+    image: javaoleg/micros-gamification:2024.0.0
+    environment:
+      SPRING_PROFILE: prod
+  database:
+    image: javaoleg/micros-database:2024.0.0
+    volumes:
+      - postgres-db-vol:/var/lib/postgresql/data
+  message-broker:
+    volumes:
+      - rabbitmq-vol:/var/lib/rabbitmq
+
+
+volumes:
+  postgres-db-vol:
+  rabbitmq-vol:

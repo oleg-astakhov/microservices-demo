@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Oleg Astakhov" id="0.0.0.0">
+        <validCheckSum>ANY</validCheckSum>
+
+        <createTable tableName="app_user">
+            <column name="pk" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="appuser_pkey"/>
+            </column>
+            <column name="reference_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="TIMESTAMP WITH TIME ZONE" />
+        </createTable>
+
+        <createSequence sequenceName="app_user__seq"/>
+        <createSequence sequenceName="user_reference_id__seq" startValue="1001"/>
+
+        <createIndex indexName="appuser__username__uidx"
+                     tableName="app_user"
+                     unique="true">
+            <column name="username"/>
+        </createIndex>
+
+        <createIndex indexName="appuser__reference_id__uidx"
+                     tableName="app_user"
+                     unique="true">
+            <column name="reference_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

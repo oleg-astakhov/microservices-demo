@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://database:5432/quiz
+    driverClassName: org.postgresql.Driver
+    username: microsappuser
+    password: microservices-database-pwd
+  rabbitmq:
+    host: message-broker

@@ -1,0 +1,216 @@
+ID1, Asia, AF, Afghanistan, Kabul, AFN
+ID2, Europe, AL, Albania, Tirana, ALL
+ID3, Africa, DZ, Algeria, Algiers, DZD
+ID4, Oceania, AS, American Samoa, Pago Pago, USD
+ID5, Europe, AD, Andorra, Andorra la Vella, EUR
+ID6, Africa, AO, Angola, Luanda, AOA
+ID7, North America, AG, Antigua and Barbuda, St. John's, XCD
+ID8, South America, AR, Argentina, Buenos Aires, ARS
+ID9, Asia, AM, Armenia, Yerevan, AMD
+ID10, Oceania, AU, Australia, Canberra, AUD
+ID11, Europe, AT, Austria, Vienna, EUR
+ID12, Asia, AZ, Azerbaijan, Baku, AZN
+ID13, North America, BS, Bahamas, Nassau, BSD
+ID14, Asia, BH, Bahrain, Manama, BHD
+ID15, Asia, BD, Bangladesh, Dhaka, BDT
+ID16, North America, BB, Barbados, Bridgetown, BBD
+ID17, Europe, BY, Belarus, Minsk, BYN
+ID18, Europe, BE, Belgium, Brussels, EUR
+ID19, North America, BZ, Belize, Belmopan, BZD
+ID20, Africa, BJ, Benin, Porto-Novo, XOF
+ID21, Asia, BT, Bhutan, Thimphu, BTN
+ID22, South America, BO, Bolivia, Sucre, BOB
+ID23, Europe, BA, Bosnia and Herzegovina, Sarajevo, BAM
+ID24, Africa, BW, Botswana, Gaborone, BWP
+ID25, South America, BR, Brazil, Brasilia, BRL
+ID26, Asia, BN, Brunei, Bandar Seri Begawan, BND
+ID27, Europe, BG, Bulgaria, Sofia, BGN
+ID28, Africa, BF, Burkina Faso, Ouagadougou, XOF
+ID29, Africa, BI, Burundi, Gitega, BIF
+ID30, Africa, CV, Cabo Verde, Praia, CVE
+ID31, Asia, KH, Cambodia, Phnom Penh, KHR
+ID32, Africa, CM, Cameroon, Yaounde, XAF
+ID33, ID1, North America, CA, Canada, Ottawa, CAD
+ID34, Africa, CF, Central African Republic, Bangui, XAF
+ID35, Africa, TD, Chad, N'Djamena, XAF
+ID36, South America, CL, Chile, Santiago, CLP
+ID37, Asia, CN, China, Beijing, CNY
+ID38, South America, CO, Colombia, Bogota, COP
+ID39, Africa, KM, Comoros, Moroni, KMF
+ID40, Africa, CG, Congo, Brazzaville, XAF
+ID41, Africa, CD, Congo (Democratic Republic), Kinshasa, CDF
+ID42, ID1, Oceania, CK, Cook Islands, Avarua, NZD
+ID43, North America, CR, Costa Rica, San Jose, CRC
+ID44 Africa, CI, Côte d'Ivoire, Yamoussoukro, XOF
+ID45, Europe, HR, Croatia, Zagreb, EUR
+ID46, North America, CU, Cuba, Havana, CUP
+ID47, Europe, CY, Cyprus, Nicosia, EUR
+ID48, Europe, CZ, Czech Republic, Prague, CZK
+ID49, Europe, DK, Denmark, Copenhagen, DKK
+ID50, Africa, DJ, Djibouti, Djibouti, DJF
+ID51, North America, DM, Dominica, Roseau, XCD
+ID52, North America, DO, Dominican Republic, Santo Domingo, DOP
+ID53, South America, EC, Ecuador, Quito, USD
+ID54, Africa, EG, Egypt, Cairo, EGP
+ID55, North America, SV, El Salvador, San Salvador, USD
+ID56, Africa, GQ, Equatorial Guinea, Malabo, XAF
+ID57, Africa, ER, Eritrea, Asmara, ERN
+ID58, Europe, EE, Estonia, Tallinn, EUR
+ID59, Africa, SZ, Eswatini, Mbabane, SZL
+ID60, Africa, ET, Ethiopia, Addis Ababa, ETB
+ID61, Oceania, FJ, Fiji, Suva, FJD
+ID62, Europe, FI, Finland, Helsinki, EUR
+ID63, Europe, FR, France, Paris, EUR
+ID64, South America, GF, French Guiana, Cayenne, EUR
+ID65, Oceania, PF, French Polynesia, Papeete, XPF
+ID66, Africa, GA, Gabon, Libreville, XAF
+ID67, Africa, GM, Gambia, Banjul, GMD
+ID68, Asia, GE, Georgia, Tbilisi, GEL
+ID69, Europe, DE, Germany, Berlin, EUR
+ID70, Africa, GH, Ghana, Accra, GHS
+ID71, Europe, GR, Greece, Athens, EUR
+ID72, North America, GD, Grenada, St. George's, XCD
+ID73, North America, GP, Guadeloupe, Basse-Terre, EUR
+ID74, Oceania, GU, Guam, Hagatna, USD
+ID75, North America, GT, Guatemala, Guatemala City, GTQ
+ID76, Africa, GN, Guinea, Conakry, GNF
+ID77, Africa, GW, Guinea-Bissau, Bissau, XOF
+ID78, South America, GY, Guyana, Georgetown, GYD
+ID79, North America, HT, Haiti, Port-au-Prince, HTG
+ID80, Europe, VA, Vatican City, Vatican City, EUR
+ID81, North America, HN, Honduras, Tegucigalpa, HNL
+ID82, Asia, HK, Hong Kong, Hong Kong, HKD
+ID83, Europe, HU, Hungary, Budapest, HUF
+ID84, Europe, IS, Iceland, Reykjavik, ISK
+ID85, Asia, IN, India, New Delhi, INR
+ID86, Asia, ID, Indonesia, Jakarta, IDR
+ID87, Asia, IR, Iran, Tehran, IRR
+ID88, Asia, IQ, Iraq, Baghdad, IQD
+ID89, Europe, IE, Ireland, Dublin, EUR
+ID90, Asia, IL, Israel, Jerusalem, ILS
+ID91, Europe, IT, Italy, Rome, EUR
+ID92, North America, JM, Jamaica, Kingston, JMD
+ID93, Asia, JP, Japan, Tokyo, JPY
+ID94, Asia, JO, Jordan, Amman, JOD
+ID95, Asia, KZ, Kazakhstan, Nur-Sultan, KZT
+ID96, Africa, KE, Kenya, Nairobi, KES
+ID97, Oceania, KI, Kiribati, South Tarawa, AUD
+ID98, Asia, KP, North Korea, Pyongyang, KPW
+ID99, Asia, KR, South Korea, Seoul, KRW
+ID100, Asia, KW, Kuwait, Kuwait City, KWD
+ID101, Asia, KG, Kyrgyzstan, Bishkek, KGS
+ID102, Asia, LA, Laos, Vientiane, LAK
+ID103, Europe, LV, Latvia, Riga, EUR
+ID104, Asia, LB, Lebanon, Beirut, LBP
+ID105, Africa, LS, Lesotho, Maseru, LSL
+ID106, Africa, LR, Liberia, Monrovia, LRD
+ID107, Africa, LY, Libya, Tripoli, LYD
+ID108, Europe, LI, Liechtenstein, Vaduz, CHF
+ID109, Europe, LT, Lithuania, Vilnius, EUR
+ID110, Europe, LU, Luxembourg, Luxembourg City, EUR
+ID111, Asia, MO, Macao, Macao, MOP
+ID112, Europe, MK, North Macedonia, Skopje, MKD
+ID113, Africa, MG, Madagascar, Antananarivo, MGA
+ID114, Africa, MW, Malawi, Lilongwe, MWK
+ID115, Asia, MY, Malaysia, Kuala Lumpur, MYR
+ID116, Asia, MV, Maldives, Male, MVR
+ID117, Africa, ML, Mali, Bamako, XOF
+ID118, Europe, MT, Malta, Valletta, EUR
+ID119, Oceania, MH, Marshall Islands, Majuro, USD
+ID120, North America, MQ, Martinique, Fort-de-France, EUR
+ID121, Africa, MR, Mauritania, Nouakchott, MRU
+ID122, Africa, MU, Mauritius, Port Louis, MUR
+ID123, North America, MX, Mexico, Mexico City, MXN
+ID124, Oceania, FM, Micronesia, Palikir, USD
+ID125, Europe, MD, Moldova, Chisinau, MDL
+ID126, Europe, MC, Monaco, Monaco, EUR
+ID127, Asia, MN, Mongolia, Ulaanbaatar, MNT
+ID128, Europe, ME, Montenegro, Podgorica, EUR
+ID129, North America, MS, Montserrat, Plymouth, XCD
+ID130, Africa, MA, Morocco, Rabat, MAD
+ID131, Africa, MZ, Mozambique, Maputo, MZN
+ID132, Asia, MM, Myanmar, Naypyidaw, MMK
+ID133, Africa, NA, Namibia, Windhoek, NAD
+ID134, Oceania, NR, Nauru, Yaren, AUD
+ID135, Asia, NP, Nepal, Kathmandu, NPR
+ID136, Europe, NL, Netherlands, Amsterdam, EUR
+ID137, Oceania, NC, New Caledonia, Noumea, XPF
+ID138, Oceania, NZ, New Zealand, Wellington, NZD
+ID139, North America, NI, Nicaragua, Managua, NIO
+ID140, Africa, NE, Niger, Niamey, XOF
+ID141, Africa, NG, Nigeria, Abuja, NGN
+ID142, Oceania, NU, Niue, Alofi, NZD
+ID143, Europe, NO, Norway, Oslo, NOK
+ID144, Asia, OM, Oman, Muscat, OMR
+ID145, Asia, PK, Pakistan, Islamabad, PKR
+ID146, Oceania, PW, Palau, Ngerulmud, USD
+ID147, Asia, PS, Palestine, Ramallah, ILS
+ID148, North America, PA, Panama, Panama City, PAB
+ID149, Oceania, PG, Papua New Guinea, Port Moresby, PGK
+ID150, ID1, South America, PY, Paraguay, Asuncion, PYG
+ID151, South America, PE, Peru, Lima, PEN
+ID152, Asia, PH, Philippines, Manila, PHP
+ID153, Oceania, PN, Pitcairn Islands, Adamstown, NZD
+ID154, Europe, PL, Poland, Warsaw, PLN
+ID155, Europe, PT, Portugal, Lisbon, EUR
+ID156, North America, PR, Puerto Rico, San Juan, USD
+ID157, Asia, QA, Qatar, Doha, QAR
+ID158, Africa, RE, Reunion, Saint-Denis, EUR
+ID159, Europe, RO, Romania, Bucharest, RON
+ID160, Europe, RU, Russia, Moscow, RUB
+ID161, Africa, RW, Rwanda, Kigali, RWF
+ID162, North America, BL, Saint Barthelemy, Gustavia, EUR
+ID163, North America, SH, Saint Helena, Jamestown, SHP
+ID164, North America, KN, Saint Kitts and Nevis, Basseterre, XCD
+ID165, North America, LC, Saint Lucia, Castries, XCD
+ID166, North America, MF, Saint Martin, Marigot, EUR
+ID167, North America, PM, Saint Pierre and Miquelon, Saint-Pierre, EUR
+ID168, North America, VC, Saint Vincent and the Grenadines, Kingstown, XCD
+ID169, Oceania, WS, Samoa, Apia, WST
+ID170, Europe, SM, San Marino, San Marino, EUR
+ID171, Africa, ST, Sao Tome and Principe, Sao Tome, STN
+ID172, Asia, SA, Saudi Arabia, Riyadh, SAR
+ID173, Africa, SN, Senegal, Dakar, XOF
+ID174, Europe, RS, Serbia, Belgrade, RSD
+ID175, Africa, SC, Seychelles, Victoria, SCR
+ID176, Africa, SL, Sierra Leone, Freetown, SLL
+ID177, Asia, SG, Singapore, Singapore, SGD
+ID178, Europe, SK, Slovakia, Bratislava, EUR
+ID179, Europe, SI, Slovenia, Ljubljana, EUR
+ID180, Oceania, SB, Solomon Islands, Honiara, SBD
+ID181, Africa, SO, Somalia, Mogadishu, SOS
+ID182, Africa, ZA, South Africa, Pretoria, ZAR
+ID183, Europe, ES, Spain, Madrid, EUR
+ID184, Asia, LK, Sri Lanka, Sri Jayawardenepura Kotte, LKR
+ID185, Africa, SD, Sudan, Khartoum, SDG
+ID186, South America, SR, Suriname, Paramaribo, SRD
+ID187, Europe, SE, Sweden, Stockholm, SEK
+ID188, Europe, CH, Switzerland, Bern, CHF
+ID189, Asia, SY, Syria, Damascus, SYP
+ID190, Asia, TW, Taiwan, Taipei, TWD
+ID191, Asia, TJ, Tajikistan, Dushanbe, TJS
+ID192, Africa, TZ, Tanzania, Dodoma, TZS
+ID193, Asia, TH, Thailand, Bangkok, THB
+ID194, Africa, TG, Togo, Lome, XOF
+ID195, Oceania, TK, Tokelau, Nukunonu, NZD
+ID196, Oceania, TO, Tonga, Nuku'alofa, TOP
+ID197, North America, TT, Trinidad and Tobago, Port of Spain, TTD
+ID198, Africa, TN, Tunisia, Tunis, TND
+ID199, Europe, TR, Turkey, Ankara, TRY
+ID200, Asia, TM, Turkmenistan, Ashgabat, TMT
+ID201, Oceania, TV, Tuvalu, Funafuti, AUD
+ID202, Africa, UG, Uganda, Kampala, UGX
+ID203, Europe, UA, Ukraine, Kyiv, UAH
+ID204, Asia, AE, United Arab Emirates, Abu Dhabi, AED
+ID205, Europe, GB, United Kingdom, London, GBP
+ID206, North America, US, United States, Washington, D.C., USD
+ID207, South America, UY, Uruguay, Montevideo, UYU
+ID208, Asia, UZ, Uzbekistan, Tashkent, UZS
+ID209, Oceania, VU, Vanuatu, Port Vila, VUV
+ID210, South America, VE, Venezuela, Caracas, VES
+ID211, Asia, VN, Vietnam, Hanoi, VND
+ID212, Oceania, WF, Wallis and Futuna, Mata-Utu, XPF
+ID213, Africa, EH, Western Sahara, El Aaiún, MAD
+ID214, Asia, YE, Yemen, Sana'a, YER
+ID215, Africa, ZM, Zambia, Lusaka, ZMW
+ID216, Africa, ZW, Zimbabwe, Harare, ZWL

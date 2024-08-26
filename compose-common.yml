@@ -1,0 +1,73 @@
+services:
+  frontend:
+    command: /usr/local/frontend/entrypoint.sh
+    ports:
+      - 80:80
+    networks:
+      - frontend-network
+    depends_on:
+      - gateway
+  gateway:
+    networks:
+      - frontend-network
+      - common-network
+    healthcheck:
+      test: [ "CMD-SHELL", "java -jar /usr/local/gateway/healthcheck.jar" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
+  quiz:
+    depends_on:
+      - database
+      - message-broker
+    networks:
+      - backend-network
+      - common-network
+    healthcheck:
+      test: [ "CMD-SHELL", "java -jar /usr/local/quiz/healthcheck.jar" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
+  gamification:
+    depends_on:
+      - database
+      - message-broker
+    networks:
+      - backend-network
+      - common-network
+    healthcheck:
+      test: [ "CMD-SHELL", "java -jar /usr/local/gamification/healthcheck.jar" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
+  database:
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 10s
+    environment:
+      - POSTGRES_PASSWORD=mypasswd
+    networks:
+      - backend-network
+  message-broker:
+    ports:
+      - 15692:15692 # Prometheus metrics
+    image: rabbitmq:3.13.6-management
+    hostname: msg-broker-rabbit
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1" ]
+      interval: 30s
+      retries: 3
+      start_period: 45s
+      timeout: 10s
+    networks:
+      - backend-network
+networks:
+  backend-network:
+  frontend-network:
+  common-network:

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Microservices Demo">
+    <link rel="stylesheet" href="/css/main.css?v=1.0.0" type="text/css">
+    <title>Microservices Demo</title>
+</head>
+<body data-darkable="">
+
+
+<div class="right margin-top-10px">
+    <button id="dark-toggle" type="button" class="button">Toggle Dark Mode</button>
+</div>
+
+<h1 class="center">Oleg Astakhov. Demo Distributed System.</h1>
+
+<div class="container margin-top-70px">
+    <div id="msg-box" style="display: none">
+
+    </div>
+</div>
+
+<div class="quiz-container margin-top-70px">
+    <div class="quiz-main cmp-gallery-item-shadow" style="display: none" id="quiz-widget">
+        <div id="quiz-question-panel">
+            <div id="question" class="quiz-question margin-top-30px"></div>
+
+            <div id="quiz-input-data-panel">
+                <div id="options" class="quiz-options"></div>
+
+                <input id="username" class="margin-top-30px form-input" type="text">
+
+                <div class="margin-top-30px">
+                    <a id="submit-quiz" href="#" class="button"></a>
+                </div>
+            </div>
+        </div>
+        <div id="quiz-post-submit-panel" class="quiz-post-submit" style="display: none;">
+            <div id="quiz-post-submit-icon" class="icon margin-top-30px">
+
+            </div>
+            <div id="quiz-post-submit-msg" content="quiz-post-submit-msg" class="margin-top-30px">
+
+            </div>
+            <a id="next-question" href="#" class="margin-top-30px button" style="display: none;"></a>
+        </div>
+        <div id="quiz-error-panel" style="display: none;">
+            <div id="quiz-error-panel-msg"></div>
+            <a id="quiz-attempt-recovery" href="#" class="button margin-top-30px">Try Again</a>
+        </div>
+    </div>
+    <div class="side-widgets" id="side-widgets" style="display: none">
+        <div class="quiz-side personal-stats cmp-gallery-item-shadow" style="display: none" id="personal-stats">
+            <div id="personal-stats-header" class="personal-stats-header margin-top-30px"></div>
+            <div id="personal-stats-data" class="margin-top-30px"></div>
+        </div>
+        <div class="quiz-side leaderboard cmp-gallery-item-shadow" style="display: none" id="leaderboard">
+            <div id="leaderboard-header" class="leaderboard-header margin-top-30px"></div>
+            <div id="leaderboard-data" class="margin-top-30px"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-3.7.1.min.js?v=1.0.0"></script>
+<script type="text/javascript" src="/js/common.js?v=1.0.0"></script>
+
+</body>
+</html>

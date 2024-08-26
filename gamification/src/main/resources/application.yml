@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gamification
+
+  liquibase:
+    change-log: classpath:/liquibase/changelogs/changelog-master.xml
+    drop-first: false
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    rabbit:
+      enabled: false
+
+amqp:
+  exchange:
+    attempts: attempts.topic
+  queue:
+    gamification: gamification.queue

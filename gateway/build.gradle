@@ -1,0 +1,90 @@
+plugins {
+	id 'java'
+	id 'groovy'
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+}
+
+group = 'com.olegastakhov'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(22)
+		vendor = JvmVendorSpec.AZUL
+		implementation = JvmImplementation.VENDOR_SPECIFIC
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+
+configurations {
+	all*.exclude module: 'spring-boot-starter-logging'
+	all*.exclude module: 'logback-classic'
+	all*.exclude group: 'commons-logging', module: 'commons-logging'
+}
+
+
+tasks.withType(JavaExec) {
+	systemProperty 'reactor.schedulers.defaultBoundedElasticOnVirtualThreads', 'true'
+}
+
+tasks.withType(org.springframework.boot.gradle.tasks.run.BootRun) {
+	systemProperty 'reactor.schedulers.defaultBoundedElasticOnVirtualThreads', 'true'
+}
+
+testing {
+	suites {
+		test {
+			useSpock("${spockGroovyVersion}")
+			dependencies {
+				implementation 'org.apache.groovy:groovy:4.0.22'
+				implementation ("org.spockframework:spock-core:${spockGroovyVersion}") {
+					exclude group: 'org.apache.groovy'
+				}
+			}
+		}
+	}
+}
+
+
+springBoot {
+	buildInfo {
+		properties {
+			/*
+            This will populate the build-info.properties file which is bundled into the
+            final distributable artifact (/build/libs/<artifact.jar>/BOOT-INF/classes/META-INF/build-info.properties)
+            */
+			group = "${group}"
+			name = "${rootProject.name}"
+			version = "${version}"
+
+			additional = [
+					time: new Date().format('dd-MM-yyyy:HH:mm:ss zzz'),
+					OS: "${System.properties['os.name']} (${System.properties['os.version']})",
+					JVM: "Vendor: ${System.properties['java.specification.vendor']}, Version: ${System.properties['java.version']}"
+			]
+		}
+	}
+}
+
+
+bootJar {
+	archiveFileName = "${rootProject.name}.jar"
+	launchScript()
+}

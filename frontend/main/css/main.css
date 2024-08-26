@@ -1,0 +1,444 @@
+@font-face {
+    font-family: 'robotoregular';
+    src: url('/fonts/Roboto-Regular-webfont.eot');
+    src: url('/fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/Roboto-Regular-webfont.woff') format('woff'),
+    url('/fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+    url('/fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'roboto_condensedbold';
+    src: url('/fonts/RobotoCondensed-Bold-webfont.eot');
+    src: url('/fonts/RobotoCondensed-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/RobotoCondensed-Bold-webfont.woff') format('woff'),
+    url('/fonts/RobotoCondensed-Bold-webfont.ttf') format('truetype'),
+    url('/fonts/RobotoCondensed-Bold-webfont.svg#roboto_condensedbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src:  url('/fonts/icomoon.eot?ncqw31');
+    src:  url('/fonts/icomoon.eot?ncqw31#iefix') format('embedded-opentype'),
+    url('/fonts/icomoon.ttf?ncqw31') format('truetype'),
+    url('/fonts/icomoon.woff?ncqw31') format('woff'),
+    url('/fonts/icomoon.svg?ncqw31#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cool2:before {
+    content: "\ed0f";
+}
+.icon-baffled2:before {
+    content: "\ed17";
+}
+.icon-cross2:before {
+    content: "\ed6d";
+}
+.icon-checkmark4:before {
+    content: "\ed72";
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    color: #3c4043;
+    background-color: #f8f9fa;
+    font-family: 'robotoregular', "Helvetica Neue", Helvetica, sans-serif, Arial;
+}
+
+h1 {
+    font-family: "roboto_condensedbold", "Helvetica Neue", Helvetica, sans-serif, Arial;
+}
+
+input[type="radio"] {
+    transform: scale(1.5);
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    accent-color: #c35d24;
+}
+label {
+    cursor: pointer;
+}
+
+.dark {
+    color: #f5f5f5;
+    background-color: #333333;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.margin-top-70px {
+    margin-top: 70px;
+}
+
+.margin-top-30px {
+    margin-top: 30px;
+}
+
+.margin-top-10px {
+    margin-top: 10px;
+}
+
+.white-space-no-wrap {
+    white-space: nowrap;
+}
+
+
+/*------------------ FORM INPUTS ----------------------*/
+
+
+.form-input::placeholder {
+    color: #757575;
+    text-transform: lowercase;
+}
+
+.form-input:-ms-input-placeholder {
+    color: #757575;
+    text-transform: lowercase;
+}
+
+.form-input {
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border: 1px solid transparent;
+    border-bottom-color: #dddddd;
+}
+
+.form-input option[value=""] {
+    color: #757575;
+}
+
+label, input {
+    display: inline-block;
+}
+
+.form-input {
+    display: inline-block;
+    width: 100%;
+    line-height: 1.8em;
+}
+
+
+.form-input {
+    font-size: 0.95em;
+}
+
+.form-input + label {
+    font-size: 0.90em;
+}
+
+.form-input:focus {
+    border-color: #ed702b;
+    background-color: #ffffff;
+    outline: 0;
+    border-radius: 4px;
+}
+
+
+.dark .form-input {
+    background-color: #333333;
+    border-bottom-color: #ed702b;
+    color: #f5f5f5;
+}
+
+.dark .form-input:focus {
+    border-color: #ed702b;
+}
+
+/*------------------ FORM INPUTS END ----------------------*/
+
+/*------------- TABLE ---------*/
+
+.table {
+    display: table;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+}
+
+/*------------- TABLE END ---------*/
+
+/*------------- MESSAGE BOX ---------*/
+
+.msg-box {
+    border: 1px solid;
+    margin: 10px 0;
+    padding:15px 10px 15px 50px;
+}
+
+.msg-box.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+
+/*------------- MESSAGE BOX END ---------*/
+
+/*------------------ GALLERY ITEM SHADOW ----------------------*/
+.cmp-gallery-item-shadow {
+    box-shadow: 0 0 10px #c1c1c1;
+    transition: box-shadow .3s ease;
+}
+
+.cmp-gallery-item-shadow:hover {
+    box-shadow: 0 0 10px #adadad;
+}
+
+body.dark .cmp-gallery-item-shadow {
+    box-shadow: 0 0 10px #575757;
+}
+
+body.dark .cmp-gallery-item-shadow:hover {
+    box-shadow: 0 0 10px #adadad;
+}
+/*------------------ GALLERY ITEM SHADOW END ----------------------*/
+
+/*------------- RESPONSIVE PADDING FOR CLICKABLE CONTROLS TO GIVE SPACE FOR CLICKING. ---------*/
+
+/*
+   Meant to scale larger for small devices to give more vertical clicking
+   space for the buttons not to click the wrong button
+*/
+
+.click-elem-resp-padding {
+    padding: 20px 0;
+    display: inline-block;
+    margin-left: 10px;
+    white-space: normal;
+}
+.click-elem-resp-padding {
+    padding: 15px 0;
+}
+
+@media only screen and (min-width: 600px) {
+    .click-elem-resp-padding {
+        padding: 10px 0;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .click-elem-resp-padding,
+    .click-elem-resp-padding {
+        padding: 5px;
+    }
+}
+
+/*------------- RESPONSIVE PADDING FOR CLICKABLE CONTROLS TO GIVE SPACE FOR CLICKING END ---------*/
+
+/*------------- CONTAINER  ---------*/
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@media (min-width: 350px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media (min-width: 480px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
+    }
+}
+/*------------- CONTAINER END  ---------*/
+
+
+.button {
+    padding: 0.4em 1.2em;
+    border-radius: 9999px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cecece;
+    font-size: 0.8em;
+    background-color: #ef5e29;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .3s ease;
+}
+
+.button:hover {
+    background-color: #c24c1e;
+}
+
+body.dark .button {
+    border-color: #ef5e29;
+    background-color: #333333;
+    color: #ef5e29;
+}
+
+body.dark .button:hover {
+    background-color: #2d2d2d;
+}
+
+
+
+/*------------- QUIZ  ---------*/
+
+.quiz-container {
+    /*margin: 0 auto;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    /*width: 100%;*/
+    /*max-width: 1000px;*/
+}
+
+.quiz-main,
+.quiz-side {
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.quiz-side {
+    text-align: left;
+}
+
+.quiz-main {
+    flex-basis: 450px;
+    flex-shrink: 1;
+}
+
+body.dark .quiz-main {
+    border: 1px solid #f5f5f5;
+    background-color: #333333;
+}
+
+.side-widgets {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 450px;
+    text-align: left;
+}
+
+.quiz-side {
+    flex-basis: 300px;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+body.dark .quiz-side {
+    border: 1px solid #f5f5f5;
+    background-color: #333333;
+}
+
+
+.quiz-question,
+.personal-stats-header,
+.leaderboard-header {
+    font-family: "roboto_condensedbold", "Helvetica Neue", Helvetica, sans-serif, Arial;
+    font-size: 1.6em;
+}
+
+.personal-stats-header,
+.leaderboard-header {
+    text-align: center;
+}
+
+.quiz-options {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.quiz-post-submit .icon {
+    font-size: 2em;
+}
+
+.quiz-post-submit.correct .icon {
+    font-size: 3em;
+    color: #00bd56;
+}
+
+.quiz-post-submit.wrong .icon {
+    font-size: 3em;
+    color: #ff4f4f;
+}
+
+.quiz-side .table-cell {
+    padding: 0.5em 1em;
+    vertical-align: middle;
+}
+
+.personal-stats .icon {
+    font-size: 2em;
+}
+
+.personal-stats .icon.correct {
+    color: #00bd56;
+}
+
+.personal-stats .icon.wrong {
+    color: #ff4f4f;
+}
+
+.leaderboard .table-cell.header {
+    border-bottom: 1px solid #dddddd;
+    background-color: #f8f9fa;
+}
+
+.dark .leaderboard .table-cell.header {
+    border-bottom-color: #ed702b;
+    background-color: #333333;
+    color: #f5f5f5;
+}
+
+/*------------- QUIZ  END ---------*/

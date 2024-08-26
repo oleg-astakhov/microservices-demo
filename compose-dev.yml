@@ -1,0 +1,38 @@
+services:
+  frontend:
+    environment:
+      SPRING_PROFILE: composedev
+    build:
+      context: ./frontend
+  gateway:
+    environment:
+      SPRING_PROFILE: composedev
+    build:
+      context: ./gateway
+  quiz:
+    environment:
+      SPRING_PROFILE: composedev
+    build:
+      context: ./quiz
+  gamification:
+    environment:
+      SPRING_PROFILE: composedev
+    build:
+      context: ./gamification
+  database:
+    ports:
+      - 5433:5432  # Main port
+    volumes:
+      - dev-postgres-db-vol:/var/lib/postgresql/data
+    build:
+      context: ./database
+  message-broker:
+    ports:
+      - 5672:5672 # AMPQ
+      - 15672:15672 # GUI
+    volumes:
+      - dev-rabbitmq-vol:/var/lib/rabbitmq
+
+volumes:
+  dev-postgres-db-vol:
+  dev-rabbitmq-vol:

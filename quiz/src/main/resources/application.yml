@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: quiz
+
+  liquibase:
+    change-log: classpath:/liquibase/changelogs/changelog-master.xml
+    drop-first: false
+    enabled: true
+
+amqp:
+  exchange:
+    attempts: attempts.topic
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    circuitbreakers:
+      enabled: true
+    rabbit:
+      enabled: false
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 20
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        register-health-indicator: true
+        slow-call-rate-threshold: 100
+        slow-call-duration-threshold: 5s
+    instances:
+      messageBroker:
+        baseConfig: default

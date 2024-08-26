@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: quiz
+          uri: http://micros-quiz:8080/
+          predicates:
+            - Path=/quiz/**
+        - id: gamification
+          uri: http://gamification-dev:8080/
+          predicates:
+            - Path=/leaderboard/**
+      default-filters:
+        - name: Retry
+          args:
+            retries: 1
+            methods: GET,POST

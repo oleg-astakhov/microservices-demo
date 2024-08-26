@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration>
+    <Properties>
+        <Property name="baseDir">/var/log/${spring:spring.application.name}</Property>
+        <Property name="app">${spring:spring.application.name}</Property>
+        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] (%c) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO"/>
+            <PatternLayout pattern="${filePatternLayout}"/>
+        </Console>
+        <RollingFile name="RollingFileAppender" filename="${baseDir}/${app}.log"
+                     filePattern="${baseDir}/archive-${app}/${app}.%d{yyyy-MM-dd-hh-mm-ss}.log.gz"> <!-- $${date:yyyy-MM} -->
+            <PatternLayout pattern="${filePatternLayout}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="50 MB"/> <!-- roll file when it reaches 50 MB and archive it -->
+            </Policies>
+            <DefaultRollOverStrategy>
+                <!-- delete files in archive which are older than 2 months -->
+                <Delete basePath="${baseDir}" maxDepth="2">
+                    <IfFileName glob="*/${app}-*.log.gz" />
+                    <IfLastModified age="P60D"/><!-- 2 months. ISO-8601. https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html -->
+                </Delete>
+            </DefaultRollOverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Root>
+
+        <logger name="com.olegastakhov.microservices" level="DEBUG" />
+    </Loggers>
+</Configuration>

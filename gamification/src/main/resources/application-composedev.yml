@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://database:5432/gamification
+    driverClassName: org.postgresql.Driver
+    username: microsappuser
+    password: microservices-database-pwd
+  r2dbc:
+    url: r2dbc:postgresql://database:5432/gamification
+    username: microsappuser
+    password: microservices-database-pwd
+  rabbitmq:
+    host: message-broker
+
+logging:
+  level:
+    org:
+      springframework:
+        amqp:
+          rabbit:
+            core:
+              RabbitAdmin: DEBUG

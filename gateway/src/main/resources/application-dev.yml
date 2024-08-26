@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: quiz
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/quiz/**
+        - id: gamification
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/leaderboard/**
+      default-filters:
+        - name: Retry
+          args:
+            retries: 1
+            methods: GET,POST

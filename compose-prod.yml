@@ -20,6 +20,7 @@ services:
     volumes:
       - postgres-db-vol:/var/lib/postgresql/data
   message-broker:
+    image: javaoleg/micros-msg-broker:2024.0.0
     volumes:
       - rabbitmq-vol:/var/lib/rabbitmq
 

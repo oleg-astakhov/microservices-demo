@@ -106,7 +106,7 @@ Once the services are up and running, you'll be presented with a Quiz game. Just
 
 I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
 
-The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I aim to make them fully reactive as well. In the best-case scenario—all of them.
+The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
 
 ## Technical Stack
 

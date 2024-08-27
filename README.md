@@ -72,9 +72,9 @@ Look for `STATUS` column. You should see status `UP` as well as `(healthy)`, whi
 
 Once the services are up and running, you'll be presented with a Quiz game. Just follow the on-screen instructions.
 
-## Things To Pay Attention To
+## Things To Focus On
 
-I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls.
+I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
 
 The focus is on making a scalable Distributed System.
 

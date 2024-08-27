@@ -106,11 +106,13 @@ Once the services are up and running, you'll be presented with a Quiz game. Just
 
 I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
 
-The focus is on making a scalable Distributed System.
+The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I aim to make them fully reactive as well. In the best-case scenario—all of them.
 
 ## Technical Stack
 
-> *Note: PoC = Proof of Concept*
+> Legend:   
+> * PoC = Proof of Concept  
+> * MVP = Minimum Viable Product
 
 * Docker
 * Gradle
@@ -163,7 +165,7 @@ At the moment there are no tests. They will also be added. All tests will be wri
 * Integration
 * End-to-end tests
 
-**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an "unmerged" branch of some new functionality that I'm giving you access to for an early preview.** 
+**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an "unmerged" branch of some new functionality that I'm giving you access to for an early preview (MVP).** 
 
 When I add the tests, I'll remove this section and add a git tag with the version ;). 
 

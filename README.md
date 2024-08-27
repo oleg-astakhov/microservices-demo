@@ -1,6 +1,8 @@
 # Demo Distributed System / Microservices
 
-Note: I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
+I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
+
+> FYI: Links provided in this document open in the same browser window. Use `CTRL` + `click` to open in new tab. 
 
 ## Starting the project
 
@@ -38,12 +40,39 @@ From this point onwards you can interact with Docker engine through your Ubuntu 
 1. Type `Terminal` in the Windows taskbar search window →
 1. In the Terminal's top tab bar, click the drop-down arrow to open a new tab, then select "Ubuntu".
 
-### Step 3. Run the Project 
+### Step 3. Get the Project
+
+You have 2 options.
+
+**Option 1: Clone the project (requires Git to be installed)**
+
+Using SSH:
+
+```shell
+$ git clone git@github.com:oleg-astakhov/microservices-demo.git
+```
+
+... or using HTTPS:
+
+```shell
+$ git clone https://github.com/oleg-astakhov/microservices-demo.git
+```
+
+**Option 2: Download the project as ZIP file**
+
+1. Navigate to [Project's GitHub homepage](https://github.com/oleg-astakhov/microservices-demo) →
+1. Click green `<> Code` button
+1. `Local` tab →
+1. Click `Download ZIP`
+1. Unzip the file to any location on your hard drive 
+
+### Step 4. Run the Project 
 
 **Option 1: using pre-built Docker images (faster boot time)**
 
 1. Navigate to the root of the project
-1Run
+1. Run
+ 
 ```shell
 $ ./up-prod-compose.sh
 ```
@@ -51,13 +80,14 @@ $ ./up-prod-compose.sh
 **Option 2: build everything locally (slower boot time)**
 
 1. Navigate to the root of the project
-2. Run
+1. Run
+
 ```shell
 $ ./up-dev-compose.sh
 ```
 *Note: you don't need to have Java installed because the source code is built inside the containers.*
 
-### Step 4. Play With the Project
+### Step 5. Play With the Project
 
 Open your web browser and navigate to http://localhost/ . 
 
@@ -72,21 +102,25 @@ Look for `STATUS` column. You should see status `UP` as well as `(healthy)`, whi
 
 Once the services are up and running, you'll be presented with a Quiz game. Just follow the on-screen instructions.
 
-## Things To Pay Attention To
+## Focus Point
 
-I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls.
+I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
 
 The focus is on making a scalable Distributed System.
 
 ## Technical Stack
 
+> *Note: PoC = Proof of Concept*
+
 * Docker
 * Gradle
 * Git
+* Spock with Groovy
 * Java 22 with Virtual Threads
 * Spring Reactor
 * Spring WebFlux
 * Spring Boot 3
+* Spring Boot Actuator
 * Netty (for Java services)
 * RabbitMQ 3 (over AMPQ)
 * Nginx (for static content) 
@@ -98,5 +132,41 @@ The focus is on making a scalable Distributed System.
 * Postgres 16
 * R2DBC for non-blocking I/O (as PoC)
 * Liquibase (for db versioning)
+  
+More will be added as I develop this system further. 
 
-More will be added as I develop this system further.
+## TODO
+
+As of 27.08.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
+* `Spring Cloud Sleuth` tracing with `Zipkin`
+* `Prometheus` metrics with `Grafana`
+* `Consul KV` for remote configs
+* `SSE` as PoC for pushing live data
+* `Graylog` for centralized logs
+* `Redis` for distributed cache
+* `Spring Security` for authentication
+
+Maybe: 
+* `MongoDB` as PoC for denormalized data 
+* `WebSockets over STOMP` as PoC for bidirectional high-performance communication
+* `JSON Web Tokens` stateless security sessions
+
+Note that `Service Registry`, `Service Discovery` and `Load Balancing` patterns are implied and provided by the use of Docker Swarm or Kubernetes. In other words, this functionality is provided out-of-the box and there's no need to reimplement it using `Spring Cloud *`.
+
+**Testing**
+
+At the moment there are no tests. They will also be added. All tests will be written using Spock and Groovy.
+
+3 types of tests:
+
+* Unit
+* Integration
+* End-to-end tests
+
+**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an "unmerged" branch of some new functionality that I'm giving you access to for an early preview.** 
+
+When I add the tests, I'll remove this section and add a git tag with the version ;). 
+
+**Security and authentication**
+
+For the same reason as for testing, I haven't added security and authentication yet.

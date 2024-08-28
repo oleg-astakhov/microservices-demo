@@ -1,4 +1,4 @@
-# Demo Distributed System / Microservices
+# Demo Reactive System
 
 I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
 
@@ -17,7 +17,7 @@ Other players can join in too, and there's a leaderboard that displays the top p
 
 I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
 
-The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
+The focus is on building a [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
 
 ## Architecture
 

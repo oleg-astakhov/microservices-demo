@@ -2,7 +2,67 @@
 
 I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
 
-> FYI: Links provided in this document open in the same browser window. Use `CTRL` + `click` to open in new tab. 
+
+> FYI: Links provided in this document open in the same browser window. Use `CTRL` + `click` to open in new tab.
+
+## What Does This System Do
+
+In essence, it's a **quiz game** where you're asked random questions about countries, cities, and continents, with 4 options to choose from for each question.
+
+For every correct answer, you earn a score. If you answer incorrectly, you're shown the correct answer along with a motivational message to keep practicing. You can also view a history of your last 5 attempts and see whether you got them right or wrong.
+
+Other players can join in too, and there's a leaderboard that displays the top players and their scores.
+
+## Focus Point
+
+I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
+
+The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
+
+## Architecture
+
+The following describes architecture so far (that is, it will be expanded and updated when functionality gets added).
+
+First of all, everything is inside Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+
+Static files are being served by a dedicated frontend `Nginx` server.
+
+All requests for dynamic content get forwarded to a `Spring Cloud Gateway` server which acts as a reverse proxy for concrete microservices. That is, frontend knows only 1 host, it isn't aware of the internal distribution of endpoints. 
+
+All logic for generating quiz questions, tracking user history and submitting answers is consolidated in a `Quiz` microservice.
+
+Correct attempt events are published to a `RabbitMQ Message Broker` server over `AMPQ` protocol from the `Quiz` microservice. This fulfills the requirement of `Message-Driven` property of a reactive system.
+
+These attempts are then picked up from the message queue by a `Gamification` microservice, which is responsible for storing all user scores, as well as a separate `leaderboard` db entity which stores calculated totals for each player.
+
+That way the frontend has 3 "widgets":
+
+1. The main quiz widget
+1. History widget
+1. Leaderboard widget
+
+The important thing to highlight here is that the first 2 widgets are provided by the `Quiz` microservice, while the 3rd—by the `Gamification` microservice. If a `Gamification` service goes down, the system as a whole continues to function (you can play), but without the Leaderboard feature (so you won't see top player list). When `Gamification` gets recovered, it will catch up with messages from the message queue and leaderboard widget will reappear.
+
+Similar approach happens with a history widget. If its code is broken, then you will still be able to play the game, but won't see the history of your last attempts.
+
+This demonstrates and fulfills the requirement of `Resilience` (`High-Availability, HA`) of a reactive system.
+
+`Gateway`, `Quiz` and `Gamification` are stateless microservices, so they can be replicated as much as needed. This fulfills the requirement of `Elastic` property of a reactive system.
+
+For Java microservices I've written a custom health check app, that pings `/actuator/health` endpoint, parses it, and specifically looks for `status` `UP`. So not only this endpoint has to respond with a `HTTP 2xx`, but also report that it's `UP`. This dedicated app is then used by the orchestration infrastructure, such as `Docker Swarm`, to remove unhealthy nodes, and then replace them with healthy ones.
+
+The use of node replication, dedicated Nginx server for static files in the closest proximity, caching, circuit breakers, health-checks, non-blocking I/O technologies such as `Netty`, `Java's Virtual Threads`, `Spring Reactor`, `R2DBC` fulfill the requirement of `Responsive` property of a reactive system.
+
+1 instance of the RabbitMQ.
+
+1 instance of Postgres database with 2 logical databases:
+
+* quiz
+* gamification
+
+So, each microservice uses its own database, but which are hosted on the same physical database server.
+
+All of this is designed with commodity hardware in mind, making it cost-effective and horizontally scalable on cloud platforms to ensure consistently high performance.
 
 ## Starting the project
 
@@ -102,12 +162,6 @@ Look for `STATUS` column. You should see status `UP` as well as `(healthy)`, whi
 
 Once the services are up and running, you'll be presented with a Quiz game. Just follow the on-screen instructions.
 
-## Focus Point
-
-I'm primarily a backend engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
-
-The focus is on building a [Reactive Distributed System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
-
 ## Technical Stack
 
 > Legend:   
@@ -132,7 +186,7 @@ The focus is on building a [Reactive Distributed System](https://www.reactiveman
 * Spring Data JPA
 * Hibernate
 * Postgres 16
-* R2DBC for non-blocking I/O (as PoC)
+* R2DBC for non-blocking I/O (as PoC for a fully reactive service)
 * Liquibase (for db versioning)
   
 More will be added as I develop this system further. 
@@ -153,8 +207,6 @@ Maybe:
 * `WebSockets over STOMP` as PoC for bidirectional high-performance communication
 * `JSON Web Tokens` stateless security sessions
 
-Note that `Service Registry`, `Service Discovery` and `Load Balancing` patterns are implied and provided by the use of Docker Swarm or Kubernetes. In other words, this functionality is provided out-of-the box and there's no need to reimplement it using `Spring Cloud *`.
-
 **Testing**
 
 At the moment there are no tests. They will also be added. All tests will be written using Spock and Groovy.
@@ -165,7 +217,7 @@ At the moment there are no tests. They will also be added. All tests will be wri
 * Integration
 * End-to-end tests
 
-**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an "unmerged" branch of some new functionality that I'm giving you access to for an early preview (MVP).** 
+**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an unmerged branch of some new functionality that I'm giving you access to for an early preview (MVP).** 
 
 When I add the tests, I'll remove this section and add a git tag with the version ;). 
 

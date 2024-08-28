@@ -1,3 +1,13 @@
+# Note that most of the entries in this file have been added with "modules"
+# in mind. For example, instead of specifying Gradle's build folder as
+# /build/, it's added as build/, which implies such directory on
+# any level, and not just root. That is because the root of this umbrella
+# project is not the actual service, but an umbrella directory which
+# combines all services. So care must be taken not to name a source
+# directory something like "dist", "out", "target", "build" and so on.
+# We could handle that accidental match situation by using /**/build/
+# syntax, but I went for a less restrictive approach.
+
 .gradle
 build/
 # Exclamation mark negates the ignore, in other words, DO NOT IGNORE = INCLUDE,
@@ -80,3 +90,5 @@ dist/
 # Log files
 *.log
 
+### VS Code ###
+.vscode/

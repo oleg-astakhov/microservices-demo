@@ -1,4 +1,4 @@
-# Demo Reactive System
+# Cloud-Native Reactive System (Demo Project)
 
 I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
 
@@ -15,7 +15,7 @@ Other players can join in too, and there's a leaderboard that displays the top p
 
 ## Focus Point
 
-I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest.
+I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest, but they get the work done.
 
 The focus is on building a [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
 
@@ -197,7 +197,7 @@ As of 27.08.2024 I am planning on implementing quite of few of the patterns/func
 * `Spring Cloud Sleuth` tracing with `Zipkin`
 * `Prometheus` metrics with `Grafana`
 * `Consul KV` for remote configs
-* `SSE` as PoC for pushing live data
+* `Server-Sent Events (SSE)` as PoC for pushing live data
 * `Graylog` for centralized logs
 * `Redis` for distributed cache
 * `Spring Security` for authentication

@@ -1,5 +1,6 @@
 package com.olegastakhov.microservices.quiz.command.getnextquestion;
 
+import com.olegastakhov.microservices.quiz.infrastructure.EnvironmentServiceImpl;
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuestionGenerator;
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuizData;
 import com.olegastakhov.microservices.quiz.common.dto.ResultDTO;
@@ -20,6 +21,8 @@ public class GetNextQuestionServiceImpl {
     private List<QuestionGenerator> questionGenerators;
     @Autowired
     LocalizationServiceImpl localization;
+    @Autowired
+    EnvironmentServiceImpl environmentService;
 
     @Autowired
     @Qualifier("GeneralPurposeVirtualThreadScheduler")
@@ -34,19 +37,25 @@ public class GetNextQuestionServiceImpl {
         return map(questionGenerators.get(new Random().nextInt(0, questionGenerators.size())).generate());
     }
 
-    private QuizDTO map(QuizData quizData) {
-        return new QuizDTO(
-                quizData.getQuestionId(),
-                quizData.getQuestionItemId(),
-                quizData.getQuestion(),
-                mapOptions(quizData.getOptions()),
-                localization.getLocalizedMessage("quiz.submitAnswerButtonCaption"),
-                localization.getLocalizedMessage("quiz.usernameInputPlaceholderCaption")
-        );
+    protected QuizDTO map(QuizData quizData) {
+        final QuizDTO result = new QuizDTO();
+
+        result.setQuestionId(quizData.getQuestionId())
+                .setQuestionItemId(quizData.getQuestionItemId())
+                .setQuestion(quizData.getQuestion())
+                .setOptions(mapOptions(quizData.getOptions()))
+                .setSubmitAnswerButtonCaption(localization.getLocalizedMessage("quiz.submitAnswerButtonCaption"))
+                .setUsernameInputPlaceholderCaption(localization.getLocalizedMessage("quiz.usernameInputPlaceholderCaption"));
+
+        if (environmentService.isCurrentEnvironmentEndToEndTests()) {
+            result.setCorrectAnswer(quizData.getCorrectAnswer());
+        }
+
+        return result;
     }
 
     public List<QuizOptionDTO> mapOptions(final List<String> options) {
-        final AtomicInteger rollingLetter = new AtomicInteger(64); // 64 = starting from capital A
+        final AtomicInteger rollingLetter = new AtomicInteger(64); // 65 = char 'A', 66 = char 'B', etc.
 
         return options.stream()
                 .map(it -> new QuizOptionDTO(it,

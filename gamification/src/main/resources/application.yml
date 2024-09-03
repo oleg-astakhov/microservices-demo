@@ -4,11 +4,21 @@ server:
 spring:
   application:
     name: gamification
-
+  datasource:
+    url: jdbc:postgresql://database:5432/gamification
+    driverClassName: org.postgresql.Driver
+    username: microsappuser
+    password: microservices-database-pwd
+  r2dbc:
+    url: r2dbc:postgresql://database:5432/gamification
+    username: microsappuser
+    password: microservices-database-pwd
   liquibase:
     change-log: classpath:/liquibase/changelogs/changelog-master.xml
     drop-first: false
     enabled: true
+  rabbitmq:
+    host: message-broker
 
 management:
   endpoint:

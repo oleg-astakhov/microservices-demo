@@ -18,4 +18,10 @@ public class SequenceReactiveRepository {
                 .one();
     }
 
+    public Mono<Long> getNextLeaderboardPk() {
+        return databaseClient.sql("SELECT NEXTVAL('leaderboard__seq')")
+                .map(row -> row.get(0, Long.class))
+                .one();
+    }
+
 }

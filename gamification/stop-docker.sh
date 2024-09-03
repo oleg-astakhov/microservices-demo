@@ -1,2 +1,2 @@
 #!/bin/sh
-docker container stop gamification-dev
+docker container stop micros-gamification

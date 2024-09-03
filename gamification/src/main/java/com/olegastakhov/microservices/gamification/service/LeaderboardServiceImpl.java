@@ -36,7 +36,7 @@ public class LeaderboardServiceImpl {
 
     private Mono<Leaderboard> createNewLeader(final String userReferenceId,
                                               final Long totalScore) {
-        return sequenceRepository.getNextScorePk().flatMap(
+        return sequenceRepository.getNextLeaderboardPk().flatMap(
                 pk -> {
                     return r2dbcEntityTemplate.insert(new Leaderboard()
                             .setPk(pk)

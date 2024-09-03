@@ -1,0 +1,47 @@
+services:
+  frontend:
+    environment:
+      SPRING_PROFILE: compose-e2e-test
+    build:
+      context: ./frontend
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost || exit 1" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
+  gateway:
+    environment:
+      SPRING_PROFILE: compose-e2e-test
+    build:
+      context: ./gateway
+  quiz:
+    environment:
+      SPRING_PROFILE: compose-e2e-test
+    build:
+      context: ./quiz
+  gamification:
+    environment:
+      SPRING_PROFILE: compose-e2e-test
+    build:
+      context: ./gamification
+  database:
+    ports:
+      - 5433:5432  # Main port
+    volumes:
+      - e2e-test-micros-postgres-db-vol:/var/lib/postgresql/data
+    build:
+      context: ./database
+  message-broker:
+    ports:
+      - 5672:5672 # AMPQ
+      - 15672:15672 # GUI
+    volumes:
+      - e2e-test-rabbitmq-vol:/var/lib/rabbitmq
+
+volumes:
+  # note: names are optional, but without explicit names Docker will prefix the volume with project name
+  e2e-test-micros-postgres-db-vol:
+    name: e2e-test-micros-postgres-db-vol
+  e2e-test-rabbitmq-vol:
+    name: e2e-test-rabbitmq-vol

@@ -4,13 +4,10 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/gamification
-    driverClassName: org.postgresql.Driver
-    username: microsappuser
-    password: microservices-database-pwd
   r2dbc:
     url: r2dbc:postgresql://localhost:5433/gamification
-    username: microsappuser
-    password: microservices-database-pwd
+  rabbitmq:
+    host: localhost
 
 logging:
   level:

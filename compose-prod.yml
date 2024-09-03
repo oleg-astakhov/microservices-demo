@@ -3,6 +3,12 @@ services:
     environment:
       SPRING_PROFILE: prod
     image: javaoleg/micros-frontend:2024.0.0
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost || exit 1" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
   gateway:
     environment:
       SPRING_PROFILE: prod
@@ -18,13 +24,16 @@ services:
   database:
     image: javaoleg/micros-database:2024.0.0
     volumes:
-      - postgres-db-vol:/var/lib/postgresql/data
+      - micros-postgres-db-vol:/var/lib/postgresql/data
   message-broker:
     image: javaoleg/micros-msg-broker:2024.0.0
     volumes:
-      - rabbitmq-vol:/var/lib/rabbitmq
+      - micros-rabbitmq-vol:/var/lib/rabbitmq
 
 
 volumes:
-  postgres-db-vol:
-  rabbitmq-vol:
+  # note: names are optional, but without explicit names Docker will prefix the volume with project name
+  micros-postgres-db-vol:
+    name: micros-postgres-db-vol
+  micros-rabbitmq-vol:
+    name: micros-rabbitmq-vol

@@ -5,7 +5,6 @@ import com.olegastakhov.microservices.quiz.service.quizes.common.QuestionsCommon
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.GetOptionsInputData;
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuestionGenerator;
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuizData;
-import com.olegastakhov.microservices.quiz.service.quizes.common.api.RandomQuizData;
 import com.olegastakhov.microservices.quiz.service.quizes.countries.dataprovider.CountriesServiceImpl;
 import com.olegastakhov.microservices.quiz.service.quizes.countries.dataprovider.CountryData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +42,13 @@ public class WhatIsTheCapitalOfCountryQuestionServiceImpl implements QuestionGen
     public QuizData generate() {
         final QuizData result = new QuizData();
         result.setQuestionId(id);
-        final RandomQuizData<CountryData> randomCountry = common.getRandomItem(countries::list);
-        result.setQuestionItemId(randomCountry.questionData().getId());
-        result.setQuestion(getLocalizedQuestion(randomCountry.questionData()));
+        final CountryData randomCountry = common.getRandomItem(countries::list);
+        result.setQuestionItemId(randomCountry.getId());
+        result.setQuestion(getLocalizedQuestion(randomCountry));
+        result.setCorrectAnswer(getAnswerRetriever().apply(randomCountry));
         final List<CountryData> options = common.getOptions(new GetOptionsInputData<CountryData>()
                 .setNumberOfOptions(4)
-                .setRandomQuizData(randomCountry)
+                .setRandomQuestion(randomCountry)
                 .setQuestionItemsSupplier(countries::list)
                 .setAnswerRetriever(getAnswerRetriever()));
         result.setOptions(common.map(options, getAnswerRetriever()));

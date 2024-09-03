@@ -51,12 +51,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ServiceValidationException.class)
-    public Mono<ResponseEntity<Map<String, String>>> handleCustomValidationException(ServiceValidationException ex, Locale locale) {
+    public Mono<ResponseEntity<Map<String, String>>> handleServiceValidationException(ServiceValidationException ex, Locale locale) {
         String errorMessage = localizationService.getLocalizedMessage(ex.getMessageKey(), locale, ex.getArgs());
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put(JSON_MESSAGE_KEY, errorMessage);
         return Mono.just(new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY));
     }
+
+    @ExceptionHandler(MandatoryFieldNotInitializedOnClientException.class)
+    public Mono<ResponseEntity<Map<String, String>>> handleMandatoryFieldNotInitializedOnClientException(MandatoryFieldNotInitializedOnClientException ex, Locale locale) {
+        log.error(ex.getMessage(), ex);
+        String errorMessage = localizationService.getLocalizedMessage("common.error.runtimeException", locale);
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put(JSON_MESSAGE_KEY, errorMessage);
+        return Mono.just(new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST));
+    }
+
 
     @ExceptionHandler(NoResourceFoundException.class)
     public Mono<ResponseEntity<Map<String, String>>> notFoundException(Exception ex, ServerWebExchange exchange, Locale locale) {

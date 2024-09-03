@@ -4,6 +4,22 @@ server:
 spring:
   application:
     name: gateway
+  cloud:
+    gateway:
+      routes: # Note that routes are not-merged from multiple Spring profiles, they are overridden
+        - id: quiz
+          uri: http://quiz:8080/
+          predicates:
+            - Path=/quiz/**
+        - id: gamification
+          uri: http://gamification:8080/
+          predicates:
+            - Path=/leaderboard/**
+      default-filters:
+        - name: Retry
+          args:
+            retries: 1
+            methods: GET,POST
 
 management:
   endpoint:

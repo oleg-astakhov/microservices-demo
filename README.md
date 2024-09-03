@@ -5,6 +5,10 @@ I started this project in August 2024, so it's still a work in progress. However
 
 > FYI: Links provided in this document open in the same browser window. Use `CTRL` + `click` to open in new tab.
 
+> Legend:
+> * PoC = Proof of Concept
+> * MVP = Minimum Viable Product
+
 ## What Does This System Do
 
 In essence, it's a **quiz game** where you're asked random questions about countries, cities, and continents, with 4 options to choose from for each question.
@@ -164,10 +168,6 @@ Once the services are up and running, you'll be presented with a Quiz game. Just
 
 ## Technical Stack
 
-> Legend:   
-> * PoC = Proof of Concept  
-> * MVP = Minimum Viable Product
-
 * Docker
 * Gradle
 * Git
@@ -213,7 +213,7 @@ Running tests requires the Java to be installed on your machine.
 1. Navigate to `<project root>`
 1. Run script:
 ```shell
-`$ ./up-e2e-test-compose.sh`
+$ ./up-e2e-test-compose.sh
 ```
 This will start all docker containers for end-to-end tests. Please wait while the entire system is ready before running the tests. To check if the system is ready you can use this command:
 
@@ -225,12 +225,13 @@ The `STATUS` column for all services must read `(healthy)`.
 3. Navigate to `<project root>/end-to-end-tests`
 3. Run script (Windows):
 ```shell
-`$ parallel-test.bat
+$ parallel-test.bat
 ```
 5. Run script (Linux):
+```shell
+$ ./gradlew -i clean build -PrunInParallel=true
 ```
-./gradlew -i clean build -PrunInParallel=true
-```
+Note that the tests will run in parallel on a multicore system.
 
 ## TODO
 

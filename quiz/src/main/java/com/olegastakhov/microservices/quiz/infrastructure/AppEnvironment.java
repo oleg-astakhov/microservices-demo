@@ -5,6 +5,7 @@ import java.util.Optional;
 public enum AppEnvironment {
     DEV("dev"),
     COMPOSE_DEV("composedev"),
+    CONTAINER_DEV("containerdev"),
     PRODUCTION("prod"),
     COMPOSE_END_TO_END_TEST("compose-e2e-test");
 
@@ -20,6 +21,10 @@ public enum AppEnvironment {
 
     public boolean isDev() {
         return DEV.equals(this);
+    }
+
+    public boolean isContainerDev() {
+        return CONTAINER_DEV.equals(this);
     }
 
     public boolean isComposeDev() {

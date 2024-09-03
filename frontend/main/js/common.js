@@ -74,7 +74,9 @@ $(document).ready(function () {
     var jqAjaxErrorFunctionForWidgets = function (_5xxErrorHandler) {
         return function (jqXHR, textStatus, errorThrown) {
             var data = (jqXHR.responseJSON ? jqXHR.responseJSON : jqXHR.responseText);
-            if (jqXHR.status >= 500 && jqXHR.status <= 599) {
+
+            // jqXHR.status === 0 is for ERR_CONNECTION_REFUSED, etc.
+            if ((jqXHR.status >= 500 && jqXHR.status <= 599) || jqXHR.status === 0) {
                 _5xxErrorHandler();
             } else {
                 handleAjaxResponse(data, jqXHR.status, errorThrown);

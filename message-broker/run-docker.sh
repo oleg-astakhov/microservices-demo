@@ -1,5 +1,5 @@
 #!/bin/sh
-docker container run --network dev-network --hostname msg-broker-rabbit --detach --rm --publish 15672:15672 --publish 5672:5672 --publish 15692:15692 --name msg-broker-dev javaoleg/micros-msg-broker:2024.0.0
+docker container run --network dev-network -v dev-micros-rabbitmq-vol:/var/lib/rabbitmq --hostname msg-broker-rabbit --detach --rm --publish 15672:15672 --publish 5672:5672 --publish 15692:15692 --name micros-msg-broker javaoleg/micros-msg-broker:2024.0.0
 
 # Note about --hostname msg-broker-rabbit:
 # RabbitMQ is that it stores data based on what it calls the "Node Name",

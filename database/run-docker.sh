@@ -1,2 +1,2 @@
 #!/bin/sh
-docker container run -e POSTGRES_PASSWORD=mysecretdevpassword -v dev-postgres-db-vol:/var/lib/postgresql/data --network dev-network --detach --rm --publish 5433:5432 --name micros-database javaoleg/micros-database:2024.0.0
+docker container run -e POSTGRES_PASSWORD=mysecretdevpassword -v dev-micros-postgres-db-vol:/var/lib/postgresql/data --network dev-network --detach --rm --publish 5433:5432 --name micros-database javaoleg/micros-database:2024.0.0

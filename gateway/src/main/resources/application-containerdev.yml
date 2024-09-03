@@ -7,11 +7,6 @@ spring:
           predicates:
             - Path=/quiz/**
         - id: gamification
-          uri: http://gamification-dev:8080/
+          uri: http://micros-gamification:8080/
           predicates:
             - Path=/leaderboard/**
-      default-filters:
-        - name: Retry
-          args:
-            retries: 1
-            methods: GET,POST

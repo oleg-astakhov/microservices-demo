@@ -4,6 +4,12 @@ services:
       SPRING_PROFILE: composedev
     build:
       context: ./frontend
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost || exit 1" ]
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      timeout: 10s
   gateway:
     environment:
       SPRING_PROFILE: composedev
@@ -23,7 +29,7 @@ services:
     ports:
       - 5433:5432  # Main port
     volumes:
-      - dev-postgres-db-vol:/var/lib/postgresql/data
+      - dev-micros-postgres-db-vol:/var/lib/postgresql/data
     build:
       context: ./database
   message-broker:
@@ -31,8 +37,11 @@ services:
       - 5672:5672 # AMPQ
       - 15672:15672 # GUI
     volumes:
-      - dev-rabbitmq-vol:/var/lib/rabbitmq
+      - dev-micros-rabbitmq-vol:/var/lib/rabbitmq
 
 volumes:
-  dev-postgres-db-vol:
-  dev-rabbitmq-vol:
+  # note: names are optional, but without explicit names Docker will prefix the volume with project name
+  dev-micros-postgres-db-vol:
+    name: dev-micros-postgres-db-vol
+  dev-micros-rabbitmq-vol:
+    name: dev-micros-rabbitmq-vol

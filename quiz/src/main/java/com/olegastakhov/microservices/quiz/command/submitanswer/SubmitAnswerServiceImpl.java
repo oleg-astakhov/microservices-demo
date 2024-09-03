@@ -2,16 +2,17 @@ package com.olegastakhov.microservices.quiz.command.submitanswer;
 
 
 import com.olegastakhov.microservices.quiz.domain.attempt.QuizAttempt;
+import com.olegastakhov.microservices.quiz.infrastructure.validation.MandatoryFieldNotInitializedOnClientException;
 import com.olegastakhov.microservices.quiz.infrastructure.validation.ServiceValidationException;
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuestionGenerator;
 import com.olegastakhov.microservices.quiz.domain.attempt.QuizAttemptRepository;
 import com.olegastakhov.microservices.quiz.common.dto.ResultDTO;
 import com.olegastakhov.microservices.quiz.service.UserServiceImpl;
 import com.olegastakhov.microservices.quiz.infrastructure.localization.LocalizationServiceImpl;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
@@ -37,9 +38,14 @@ public class SubmitAnswerServiceImpl {
 
     @Transactional
     public ResultDTO<SubmitAnswerResultDTO> submitAnswer(SubmitAnswerData input) {
-        Assert.notNull(input.getQuestionId(), "questionId is null when not expected"); // passed by programmer from UI
-        Assert.notNull(input.getQuestionItemId(), "questionItemId is null when not expected"); // passed by programmer from UI
-
+        if (StringUtils.isBlank(input.getQuestionId())) {
+            // passed by programmer from UI, user is not at fault
+            throw new MandatoryFieldNotInitializedOnClientException("questionId is null when not expected");
+        }
+        if (StringUtils.isBlank(input.getQuestionItemId())) {
+            // passed by programmer from UI, user is not at fault
+            throw new MandatoryFieldNotInitializedOnClientException("questionItemId is null when not expected");
+        }
         return new ResultDTO<>(submit(input));
     }
 

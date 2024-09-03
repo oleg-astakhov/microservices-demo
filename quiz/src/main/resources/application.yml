@@ -4,11 +4,17 @@ server:
 spring:
   application:
     name: quiz
-
+  datasource:
+    url: jdbc:postgresql://database:5432/quiz
+    driverClassName: org.postgresql.Driver
+    username: microsappuser
+    password: microservices-database-pwd
   liquibase:
     change-log: classpath:/liquibase/changelogs/changelog-master.xml
     drop-first: false
     enabled: true
+  rabbitmq:
+    host: message-broker
 
 amqp:
   exchange:

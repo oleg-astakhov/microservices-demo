@@ -1,2 +1,2 @@
 #!/bin/sh
-docker container stop msg-broker-dev
+docker container stop micros-msg-broker

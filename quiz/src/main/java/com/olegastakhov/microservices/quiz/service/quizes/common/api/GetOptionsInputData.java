@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class GetOptionsInputData<T> {
     private int numberOfOptions;
-    private  RandomQuizData<T> randomQuizData;
+    private  T randomQuestion;
     private  Supplier<List<T>> questionItemsSupplier;
     private  Function<T, String> answerRetriever;
 
@@ -19,12 +19,12 @@ public class GetOptionsInputData<T> {
         return this;
     }
 
-    public RandomQuizData<T> getRandomQuizData() {
-        return randomQuizData;
+    public T getRandomQuestion() {
+        return randomQuestion;
     }
 
-    public GetOptionsInputData<T> setRandomQuizData(RandomQuizData<T> randomQuizData) {
-        this.randomQuizData = randomQuizData;
+    public GetOptionsInputData<T> setRandomQuestion(T randomQuestion) {
+        this.randomQuestion = randomQuestion;
         return this;
     }
 

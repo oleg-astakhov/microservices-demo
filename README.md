@@ -191,6 +191,47 @@ Once the services are up and running, you'll be presented with a Quiz game. Just
   
 More will be added as I develop this system further. 
 
+## Tests
+All tests are written using Spock and Groovy.
+
+You can find BDD-style end-to-end tests under: `<project root>/end-to-end-tests`
+
+For fast access to an example class you can jump straight into  `SubmitQuizAnswerNormalFlowSpec`. 
+
+When I write such tests I usually follow these 3 rules/guidelines:
+
+* Tests should be highly readable (technical stuff is hidden in utils)
+* Test should fit onto one screen without scrolling (this also means they are focused, I'd rather create multiple smaller tests, than 1 huge hard-to-maintain test. Exception to this is some regression type of tests)
+* Tests should not depend on one another, i.e. complete isolation (end goal = parallel execution)
+
+The last point from the above list requires careful planning and execution from the very beginning, as well as maintaining that diligence going forward. This affects both the tests and the code that is being tested. The ultimate goal is to enable **all tests to run in parallel**, which is how these tests are already designed. Running tests in parallel uses all available hardware resource efficiently and reduces the overall execution time **dramatically**.
+
+**Running the tests**
+
+Running tests requires the Java to be installed on your machine.
+
+1. Navigate to `<project root>`
+1. Run script:
+```shell
+`$ ./up-e2e-test-compose.sh`
+```
+This will start all docker containers for end-to-end tests. Please wait while the entire system is ready before running the tests. To check if the system is ready you can use this command:
+
+```shell
+$ docker container ls
+```
+The `STATUS` column for all services must read `(healthy)`.
+
+3. Navigate to `<project root>/end-to-end-tests`
+3. Run script (Windows):
+```shell
+`$ parallel-test.bat
+```
+5. Run script (Linux):
+```
+./gradlew -i clean build -PrunInParallel=true
+```
+
 ## TODO
 
 As of 27.08.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
@@ -207,20 +248,3 @@ Maybe:
 * `WebSockets over STOMP` as PoC for bidirectional high-performance communication
 * `JSON Web Tokens` stateless security sessions
 
-**Testing**
-
-At the moment there are no tests. They will also be added. All tests will be written using Spock and Groovy.
-
-3 types of tests:
-
-* Unit
-* Integration
-* End-to-end tests
-
-**P.S. Yes, I write tests alongside the functionality. So think of the current state of this demo project as an unmerged branch of some new functionality that I'm giving you access to for an early preview (MVP).** 
-
-When I add the tests, I'll remove this section and add a git tag with the version ;). 
-
-**Security and authentication**
-
-For the same reason as for testing, I haven't added security and authentication yet.

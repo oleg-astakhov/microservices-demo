@@ -7,6 +7,7 @@ public class QuizData {
     private String questionId;
     private String questionItemId;
     private String question;
+    private String correctAnswer;
     private List<String> options = new ArrayList<>();
 
     public String getQuestionId() {
@@ -33,6 +34,15 @@ public class QuizData {
 
     public QuizData setQuestion(String question) {
         this.question = question;
+        return this;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public QuizData setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
         return this;
     }
 

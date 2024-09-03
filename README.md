@@ -206,7 +206,7 @@ When I write such tests I usually follow these 3 rules/guidelines:
 
 The last point from the above list requires careful planning and execution from the very beginning, as well as maintaining that diligence going forward. This affects both the tests and the code that is being tested. The ultimate goal is to enable **all tests to run in parallel**, which is how these tests are already designed. Running tests in parallel uses all available hardware resource efficiently and reduces the overall execution time **dramatically**.
 
-**Running the tests**
+### Running the tests
 
 Running tests requires the Java to be installed on your machine.
 
@@ -235,7 +235,7 @@ Note that the tests will run in parallel on a multicore system.
 
 ## TODO
 
-As of 27.08.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
+As of 03.09.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
 * `Spring Cloud Sleuth` tracing with `Zipkin`
 * `Prometheus` metrics with `Grafana`
 * `Consul KV` for remote configs

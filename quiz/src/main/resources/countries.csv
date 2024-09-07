@@ -30,7 +30,7 @@ ID29, Africa, BI, Burundi, Gitega, BIF
 ID30, Africa, CV, Cabo Verde, Praia, CVE
 ID31, Asia, KH, Cambodia, Phnom Penh, KHR
 ID32, Africa, CM, Cameroon, Yaounde, XAF
-ID33, ID1, North America, CA, Canada, Ottawa, CAD
+ID33, North America, CA, Canada, Ottawa, CAD
 ID34, Africa, CF, Central African Republic, Bangui, XAF
 ID35, Africa, TD, Chad, N'Djamena, XAF
 ID36, South America, CL, Chile, Santiago, CLP
@@ -39,9 +39,9 @@ ID38, South America, CO, Colombia, Bogota, COP
 ID39, Africa, KM, Comoros, Moroni, KMF
 ID40, Africa, CG, Congo, Brazzaville, XAF
 ID41, Africa, CD, Congo (Democratic Republic), Kinshasa, CDF
-ID42, ID1, Oceania, CK, Cook Islands, Avarua, NZD
+ID42, Oceania, CK, Cook Islands, Avarua, NZD
 ID43, North America, CR, Costa Rica, San Jose, CRC
-ID44 Africa, CI, Côte d'Ivoire, Yamoussoukro, XOF
+ID44, Africa, CI, Côte d'Ivoire, Yamoussoukro, XOF
 ID45, Europe, HR, Croatia, Zagreb, EUR
 ID46, North America, CU, Cuba, Havana, CUP
 ID47, Europe, CY, Cyprus, Nicosia, EUR
@@ -147,7 +147,7 @@ ID146, Oceania, PW, Palau, Ngerulmud, USD
 ID147, Asia, PS, Palestine, Ramallah, ILS
 ID148, North America, PA, Panama, Panama City, PAB
 ID149, Oceania, PG, Papua New Guinea, Port Moresby, PGK
-ID150, ID1, South America, PY, Paraguay, Asuncion, PYG
+ID150, South America, PY, Paraguay, Asuncion, PYG
 ID151, South America, PE, Peru, Lima, PEN
 ID152, Asia, PH, Philippines, Manila, PHP
 ID153, Oceania, PN, Pitcairn Islands, Adamstown, NZD
@@ -203,7 +203,7 @@ ID202, Africa, UG, Uganda, Kampala, UGX
 ID203, Europe, UA, Ukraine, Kyiv, UAH
 ID204, Asia, AE, United Arab Emirates, Abu Dhabi, AED
 ID205, Europe, GB, United Kingdom, London, GBP
-ID206, North America, US, United States, Washington, D.C., USD
+ID206, North America, US, United States, Washington D.C., USD
 ID207, South America, UY, Uruguay, Montevideo, UYU
 ID208, Asia, UZ, Uzbekistan, Tashkent, UZS
 ID209, Oceania, VU, Vanuatu, Port Vila, VUV

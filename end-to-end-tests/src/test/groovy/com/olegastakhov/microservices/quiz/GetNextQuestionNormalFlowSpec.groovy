@@ -16,21 +16,21 @@ class GetNextQuestionNormalFlowSpec extends AbstractSpecification {
 
     def "get next question - all properties must be initialized"() {
         when: "call endpoint to get the next question"
-        Map data = QuizHelper.getNextQuestion(params)
+        Map quizData = QuizHelper.getNextQuestion(params)
 
         Set<String> uniqueAnswers = new HashSet<>()
 
         then: "check returned data - all properties must be initialized"
 
-        null == data.message
-        data.questionId
-        data.questionItemId
-        data.question
-        VALID_QUESTION_IDS.contains(data.questionId)
-        !VALID_QUESTION_IDS.contains(data.question)
-        4 == data.options.size()
+        null == quizData.message
+        quizData.questionId
+        quizData.questionItemId
+        quizData.question
+        VALID_QUESTION_IDS.contains(quizData.questionId)
+        !VALID_QUESTION_IDS.contains(quizData.question)
+        4 == quizData.options.size()
         with (new AtomicInteger(64)) {rollingLetter -> // 65 = char 'A', 66 = char 'B', etc.
-            (data.options as List).stream().forEach {option ->
+            (quizData.options as List).stream().forEach {option ->
                 assert option.valueForBackend
                 assert option.displayValue
                 // this line checks that options starts from capital letter A:, then B:, then C:, etc.
@@ -38,8 +38,9 @@ class GetNextQuestionNormalFlowSpec extends AbstractSpecification {
                 assert !uniqueAnswers.contains(option.valueForBackend) // verify no repeating options
                 uniqueAnswers.add(option.valueForBackend)
             }
+            uniqueAnswers.contains(quizData.correctAnswer)
         }
-        data.submitAnswerButtonCaption == "Submit"
-        data.usernameInputPlaceholderCaption == "enter your username"
+        quizData.submitAnswerButtonCaption == "Submit"
+        quizData.usernameInputPlaceholderCaption == "enter your username"
     }
 }

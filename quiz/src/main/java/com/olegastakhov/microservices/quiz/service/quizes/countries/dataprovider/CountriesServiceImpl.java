@@ -1,5 +1,7 @@
 package com.olegastakhov.microservices.quiz.service.quizes.countries.dataprovider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,8 @@ import java.util.stream.Stream;
 
 @Component
 public class CountriesServiceImpl {
+    private static final Logger log = LoggerFactory.getLogger(CountriesServiceImpl.class);
+
     private final List<CountryData> countryData;
     private final Map<String, CountryData> idToCountry = new HashMap<>();
 
@@ -47,7 +51,14 @@ public class CountriesServiceImpl {
     private List<CountryData> parseCountryData(final Stream<String> lines) {
         final Set<String> countryCodes = new HashSet<>();
         return lines.map(it -> it.split(","))
-                .filter(it -> it.length == 6) // skip lines that don't have enough parts
+                .filter(it -> {
+                    final int expectedTokens = 6;
+                    if (it.length != expectedTokens) {
+                        log.warn("Wrong number of tokens. Expecting: {}. Got: {}. This item will be skipped. Source: {}", expectedTokens, it.length, Arrays.asList(it));
+                        return false;
+                    }
+                    return true;
+                })
                 .map(parts -> {
                     final CountryData countryData = map(parts);
                     if (countryCodes.contains(countryData.getCountryCode())) {

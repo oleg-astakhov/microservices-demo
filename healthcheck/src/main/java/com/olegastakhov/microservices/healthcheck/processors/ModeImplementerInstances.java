@@ -1,5 +1,8 @@
 package com.olegastakhov.microservices.healthcheck.processors;
 
+import com.olegastakhov.microservices.healthcheck.processors.actuator.ActuatorModeImpl;
+import com.olegastakhov.microservices.healthcheck.processors.httpstatus.HttpStatusCodeModeImpl;
+
 import java.util.List;
 
 public class ModeImplementerInstances {

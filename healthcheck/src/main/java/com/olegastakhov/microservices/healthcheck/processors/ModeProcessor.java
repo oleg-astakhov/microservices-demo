@@ -1,9 +1,9 @@
 package com.olegastakhov.microservices.healthcheck.processors;
 
-import com.olegastakhov.microservices.healthcheck.config.Config;
+import java.util.List;
 
 public interface ModeProcessor {
-    void process(Config config);
+    void process(List<String> arguments);
     String getModeId();
     boolean isDefault();
 }

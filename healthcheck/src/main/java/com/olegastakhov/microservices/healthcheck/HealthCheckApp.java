@@ -1,10 +1,9 @@
 package com.olegastakhov.microservices.healthcheck;
 
-import com.olegastakhov.microservices.healthcheck.config.Config;
-import com.olegastakhov.microservices.healthcheck.config.ConfigParserBuilder;
-import com.olegastakhov.microservices.healthcheck.exception.ConfigurationException;
-import com.olegastakhov.microservices.healthcheck.processors.ModeImplementerInstances;
+import com.olegastakhov.microservices.healthcheck.processors.ProcessorFinder;
 import com.olegastakhov.microservices.healthcheck.processors.ModeProcessor;
+
+import java.util.List;
 
 /**
  * See usage instructions inside ConfigParserBuilder
@@ -25,13 +24,8 @@ public class HealthCheckApp {
     }
 
     private static void process(String[] args) {
-        final Config config = new ConfigParserBuilder().build(args);
-
-        final ModeProcessor processor = ModeImplementerInstances.getInstance().getProcessors().stream()
-                .filter(it -> it.getModeId().equals(config.getMode()))
-                .findFirst()
-                .orElseThrow(() -> new ConfigurationException(String.format("Unhandled mode: %s", config.getMode())));
-
-        processor.process(config);
+        final List<String> arguments = List.of(args);
+        final ModeProcessor processor = new ProcessorFinder().getProcessor(arguments);
+        processor.process(arguments);
     }
 }

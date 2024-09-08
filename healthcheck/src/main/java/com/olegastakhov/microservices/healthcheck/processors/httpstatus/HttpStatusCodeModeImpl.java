@@ -28,7 +28,10 @@ public class HttpStatusCodeModeImpl implements ModeProcessor {
     @Override
     public void process(List<String> arguments) {
         final Config config = parseConfig(arguments);
+        assertStatusCode(config);
+    }
 
+    private void assertStatusCode(final Config config) {
         try (HttpClient client = HttpClient.newHttpClient()) {
             final HttpResponse<String> response = Util.getInstance().getHttpResponse(config.getHealthCheckUrl(), client);
             if (response.statusCode() != config.getStatusCode()) {

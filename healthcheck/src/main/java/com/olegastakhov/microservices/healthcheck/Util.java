@@ -1,6 +1,5 @@
 package com.olegastakhov.microservices.healthcheck;
 
-import com.olegastakhov.microservices.healthcheck.config.Config;
 import com.olegastakhov.microservices.healthcheck.exception.NotHealthyException;
 
 import java.net.URI;
@@ -21,15 +20,15 @@ public class Util {
     private Util() {
     }
 
-    public HttpResponse<String> getHttpResponse(final Config config,
+    public HttpResponse<String> getHttpResponse(final String url,
                                                 final HttpClient client) {
         final HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(config.getHealthCheckUrl()))
+                .uri(URI.create(url))
                 .build();
         try {
             return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
-            throw new NotHealthyException(String.format("Could not make connection to: %s", config.getHealthCheckUrl()));
+            throw new NotHealthyException(String.format("Could not make connection to: %s", url));
         }
     }
 }

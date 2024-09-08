@@ -34,36 +34,43 @@ public class ActuatorModeImpl implements ModeProcessor {
     @Override
     public void process(final List<String> arguments) {
         final Config config = parseConfig(arguments);
+        final String body = getHttpResponseBody(config);
+        final Map<String, Object> map = parseJsonAsMap(body, config);
+        assertStatusUp(map);
+    }
 
+    private void assertStatusUp(Map<String, Object> map) {
+        final String status = (String) map.get("status");
+        if (null == status) {
+            throw new NotHealthyException("Property 'status' is not found in parsed JSON");
+        }
+
+        final String expectedStatus = "UP";
+
+        if (!expectedStatus.equals(status)) {
+            throw new NotHealthyException(String.format("Non-expected status. Expecting: %s. Got: %s", expectedStatus, status));
+        }
+        System.out.println("Service is UP");
+    }
+
+    private Map<String, Object> parseJsonAsMap(final String body,
+                                               final Config config) {
         final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(body, new TypeReference<HashMap<String, Object>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new NotHealthyException(String.format("Could not parse JSON response from: %s", config.getHealthCheckUrl()));
+        }
+    }
 
+    private String getHttpResponseBody(final Config config) {
         try (HttpClient client = HttpClient.newHttpClient()) {
             final HttpResponse<String> response = Util.getInstance().getHttpResponse(config.getHealthCheckUrl(), client);
             if (response.statusCode() != config.getStatusCode()) {
                 throw new NotHealthyException(String.format("HTTP status code not satisfied. Expecting: %s. Got: %s", config.getStatusCode(), response.statusCode()));
             }
-
-            final String body = response.body();
-            final Map<String, Object> map;
-            try {
-                map = objectMapper.readValue(body, new TypeReference<HashMap<String, Object>>() {
-                });
-            } catch (JsonProcessingException e) {
-                throw new NotHealthyException(String.format("Could not parse JSON response from: %s", config.getHealthCheckUrl()));
-            }
-
-            final String status = (String) map.get("status");
-            if (null == status) {
-                throw new NotHealthyException("Property 'status' is not found in parsed JSON");
-            }
-
-            final String expectedStatus = "UP";
-
-            if (!expectedStatus.equals(status)) {
-                throw new NotHealthyException(String.format("Non-expected status. Expecting: %s. Got: %s", expectedStatus, status));
-            }
-
-            System.out.println("Service is UP");
+            return response.body();
         }
     }
 

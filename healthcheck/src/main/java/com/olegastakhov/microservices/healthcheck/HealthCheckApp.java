@@ -5,10 +5,6 @@ import com.olegastakhov.microservices.healthcheck.processors.ModeProcessor;
 
 import java.util.List;
 
-/**
- * See usage instructions inside ConfigParserBuilder
- */
-
 public class HealthCheckApp {
     private static final int DOCKER_ERROR_EXIT_CODE = 1;  // Docker treats only code 1 as unhealthy indicator
     private static final int SUCCESS_EXIT_CODE = 0;

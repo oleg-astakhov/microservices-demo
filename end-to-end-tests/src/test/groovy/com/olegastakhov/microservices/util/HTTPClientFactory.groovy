@@ -99,11 +99,7 @@ class HTTPClientFactory {
         /**
          * Explicitly remove/consume this configuration, so that it was not picked up by
          * another piece of code which wants to create an HttpClient.
-         * Initially, it was not possible to pass configuration externally (via "params" map),
-         * but this was quite inconvenient. At one point, I needed to set "disableContentCompression"
-         * on the client, and I couldn't. So I refactored the code to be able to access the
-         * test's "param" map, but once we read the values, remove the keys to avoid any mix ups.
-         */
+        */
         params.remove("ns_httpClient_configuration_disableCookieManagement")
         params.remove("ns_httpClient_configuration_enableLaxRedirectStrategy")
         params.remove("ns_httpClient_configuration_disableContentCompression")
@@ -134,26 +130,12 @@ class HTTPClientFactory {
             requestConfigBuilder.setCookieSpec(CookieSpecs.IGNORE_COOKIES)
         } else {
             /**
-             * This has been added after migration from Spring Boot 2.x to
-             * Spring Boot 3.2.2.
-             *
-             * Without this, cookies which are sent from server using set-cookie
-             * header are never populated into the cookieStore of the HttpClient
-             * which will be built using this builder. This is because the format
-             * of the `Expires` property has changed, and parsing of this property
-             * fails silenly and cookieStore is not populated.
-             *
-             * Here are the formats:
-             * SB2: Expires=Sat, 24-Feb-2024 17:37:36 GMT;
-             * SB3: Expires=Sat, 24 Feb 2024 17:35:37 GMT;
-             *
-             * Parsing occurs in class `org.apache.http.client.protocol.ResponseProcessCookies`
-             * (of `org.apache.httpcomponents:httpclient:4.5.13`) with this line:
-             *
-             * final List<Cookie> cookies = cookieSpec.parse(header, cookieOrigin);
-             *
-             * which resulted in `MalformedCookieException` with a message:
+             * Without this you'll get:
+             * `MalformedCookieException` with a message:
              * `Invalid 'expires' attribute: Sat, 24 Feb 2024 17:34:28 GMT`
+             *
+             * This is because the format of the `Expires` property which
+             * fails silently during parsing, and cookieStore is not populated.
              */
             requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD)
         }

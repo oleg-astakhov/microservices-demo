@@ -14,7 +14,7 @@ public class GetPersonalStatsController {
 
     @GetMapping("/quiz/personal-stats")
     public Mono<ResultDTO<PersonalStatsDTO>> personalStats(final @RequestParam(value = "username", required = false) String username) {
-        // TODO user will come from security context, not from query param
+        // TODO imagine user will come from security context, not from query param
         return getPersonalStatsService.getPersonalStats(username);
     }
 }

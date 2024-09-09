@@ -19,9 +19,19 @@ Other players can join in too, and there's a leaderboard that displays the top p
 
 ## Focus Point
 
-I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest, but they get the work done.
-
 The focus is on building a [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
+
+**Frontend**
+
+I'm primarily a backend software engineer, so frontend is there only for demo purposes. I use JQuery and AJAX calls, and they are not the point of interest, but they get the work done. 
+
+**Security (Authentication)**
+
+Security isn't the primary focus of this system either, but it's definitely implied (e.g., `Spring Security`, `JSON Web Tokens`, etc.).
+
+However, depending on the architecture, not all services need to be secured in a traditional manner. For instance, once a request is within a private subnet, it can travel over HTTP instead of HTTPS, which can also boost performance.
+
+By using `JWT`, we can avoid duplicating authentication logic across each microservice, and concentrate on core business logic. The only requirement is to validate the JWT in each service. Of course, like everything, JWT comes with its own trade-offs, like token invalidation...
 
 ## Architecture
 
@@ -233,6 +243,19 @@ $ ./gradlew -i clean build -PrunInParallel=true
 ```
 Note that the tests will run in parallel on a multicore system.
 
+**CI/CD**
+
+Alternatively, there's a script which is designed to be used in a `CI/CD` environment, which will start Docker Compose, run then tests, and then stop Docker Compose.
+
+Windows:
+```shell
+$ parallel-test-ci.bat
+```
+Linux:
+```shell
+$ ./gradlew -i clean build -PrunInParallel=true -Pci-mode=true
+```
+
 ## TODO
 
 As of 03.09.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
@@ -242,10 +265,9 @@ As of 03.09.2024 I am planning on implementing quite of few of the patterns/func
 * `Server-Sent Events (SSE)` as PoC for pushing live data
 * `Graylog` for centralized logs
 * `Redis` for distributed cache
-* `Spring Security` for authentication
 
 Maybe: 
+
 * `MongoDB` as PoC for denormalized data 
 * `WebSockets over STOMP` as PoC for bidirectional high-performance communication
-* `JSON Web Tokens` stateless security sessions
-
+* `JSON Web Tokens` for authentication

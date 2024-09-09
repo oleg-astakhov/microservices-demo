@@ -29,14 +29,14 @@ public class GetPersonalStatsServiceImpl {
     private Scheduler virtualThreadScheduler;
 
     public Mono<ResultDTO<PersonalStatsDTO>> getPersonalStats(final String username) {
-        // TODO user will come from security context
+        // TODO imagine user will come from security context
         Assert.hasLength(username, "username is blank when not expected");
         return Mono.fromCallable(() -> new ResultDTO<>(doGetPersonalStats(username)))
                 .subscribeOn(virtualThreadScheduler);
     }
 
     private PersonalStatsDTO doGetPersonalStats(final String username) {
-        final Optional<AppUser> user = userRepository.findByUsername(username); // TODO from security context
+        final Optional<AppUser> user = userRepository.findByUsername(username); // TODO imagine user is taken from security context
         if (user.isEmpty()) {
             throw new IllegalStateException(String.format("User with username [%s] does not exist", username));
         }

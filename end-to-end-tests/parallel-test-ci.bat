@@ -1,0 +1,1 @@
+gradlew.bat -i clean build -PrunInParallel=true -Pci-mode=true

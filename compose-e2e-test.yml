@@ -10,21 +10,39 @@ services:
       retries: 3
       start_period: 40s
       timeout: 10s
+    depends_on:
+      gateway:
+        condition: service_healthy
   gateway:
     environment:
       SPRING_PROFILE: compose-e2e-test
     build:
       context: ./gateway
+    depends_on:
+      quiz:
+        condition: service_healthy
+      gamification:
+        condition: service_healthy
   quiz:
     environment:
       SPRING_PROFILE: compose-e2e-test
     build:
       context: ./quiz
+    depends_on:
+      database:
+        condition: service_healthy
+      message-broker:
+        condition: service_healthy
   gamification:
     environment:
       SPRING_PROFILE: compose-e2e-test
     build:
       context: ./gamification
+    depends_on:
+      database:
+        condition: service_healthy
+      message-broker:
+        condition: service_healthy
   database:
     ports:
       - 5433:5432  # Main port

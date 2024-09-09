@@ -22,6 +22,14 @@ class Environment {
         return Boolean.valueOf(System.getProperty("app-core.debug"))
     }
 
+    /**
+     * Continuous Integration mode
+     * @return
+     */
+    boolean isCiMode() {
+        return Boolean.valueOf(System.getProperty("ci-mode"))
+    }
+
     PollingConditions getPollingConditions() {
         if (isDebugMode()) {
             return this.debugPollingConditions

@@ -19,7 +19,6 @@ repositories {
 
 dependencies {
     testImplementation 'org.apache.commons:commons-lang3:3.14.0'
-    testImplementation 'org.apache.commons:commons-text:1.11.0'
 
     testImplementation 'org.slf4j:slf4j-api:2.0.12'
     testImplementation 'org.slf4j:slf4j-reload4j:2.0.12'
@@ -29,8 +28,6 @@ dependencies {
 
     testImplementation 'commons-io:commons-io:2.15.1'
     testImplementation 'org.apache.httpcomponents:httpmime:4.5.14'
-    testImplementation 'com.icegreen:greenmail:2.0.1'
-    testImplementation 'org.jsoup:jsoup:1.17.2'
 
     testImplementation 'org.testcontainers:testcontainers:1.20.1'
     testImplementation 'org.testcontainers:spock:1.20.1'

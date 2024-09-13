@@ -66,19 +66,10 @@ testing {
 springBoot {
 	buildInfo {
 		properties {
-			/*
-            This will populate the build-info.properties file which is bundled into the
-            final distributable artifact (/build/libs/<artifact.jar>/BOOT-INF/classes/META-INF/build-info.properties)
-            */
+			// For build-info.properties file under META-INF folder
 			group = "${group}"
 			name = "${rootProject.name}"
 			version = "${version}"
-
-			additional = [
-					time: new Date().format('dd-MM-yyyy:HH:mm:ss zzz'),
-					OS: "${System.properties['os.name']} (${System.properties['os.version']})",
-					JVM: "Vendor: ${System.properties['java.specification.vendor']}, Version: ${System.properties['java.version']}"
-			]
 		}
 	}
 }

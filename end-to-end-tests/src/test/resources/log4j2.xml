@@ -2,11 +2,11 @@
 
 <Configuration>
     <Properties>
-        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] (%c) - %m%n</Property>
+        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p (%c{1}) - %m%n</Property>
     </Properties>
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <ThresholdFilter level="INFO"/>
+<!--            <ThresholdFilter level="INFO"/>-->
             <PatternLayout pattern="${filePatternLayout}"/>
         </Console>
     </Appenders>
@@ -17,6 +17,5 @@
         </Root>
 
         <logger name="com.olegastakhov" level="DEBUG" />
-        <logger name="org.testcontainers" level="INFO" />
     </Loggers>
 </Configuration>

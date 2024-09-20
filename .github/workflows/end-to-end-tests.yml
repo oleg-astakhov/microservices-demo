@@ -1,0 +1,38 @@
+name: End-to-End Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  e2e-tests:
+    name: End-to-End Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 for Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Run the tests
+        working-directory: ./end-to-end-tests
+        run: |
+          chmod +x gradlew
+          ./parallel-test-ci.sh
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: end-to-end-tests/build/reports/tests/test/
+          retention-days: 2

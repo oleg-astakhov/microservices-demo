@@ -253,7 +253,7 @@ $ parallel-test-ci.bat
 ```
 Linux:
 ```shell
-$ ./gradlew -i clean build -PrunInParallel=true -Pci-mode=true
+$ ./parallel-test-ci.sh
 ```
 
 ## TODO

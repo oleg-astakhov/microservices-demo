@@ -27,6 +27,7 @@ jobs:
         working-directory: ./end-to-end-tests
         run: |
           chmod +x gradlew
+          chmod +x parallel-test-ci.sh
           ./parallel-test-ci.sh
 
       - name: Upload test report

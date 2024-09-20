@@ -3,10 +3,7 @@ package com.olegastakhov.microservices
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.spockframework.runtime.extension.IGlobalExtension
-import org.testcontainers.containers.DockerComposeContainer
-import org.testcontainers.containers.wait.strategy.Wait
-
-import java.time.Duration
+import org.testcontainers.containers.ComposeContainer
 
 /**
  * For this code to work, a file with name:
@@ -19,11 +16,11 @@ import java.time.Duration
 class SuiteResourceManagement implements IGlobalExtension {
     private static final Logger log = LoggerFactory.getLogger(SuiteResourceManagement.class);
 
-    DockerComposeContainer compose
+    ComposeContainer compose
 
     SuiteResourceManagement() {
         if (Environment.getInstance().isCiMode()) {
-            compose = new DockerComposeContainer(
+            compose = new ComposeContainer(
                     new File("../compose-common.yml"),
                     new File("../compose-e2e-test.yml")
             ).withLocalCompose(true)

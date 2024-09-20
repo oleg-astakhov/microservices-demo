@@ -4,6 +4,7 @@ FROM ${BASE_IMAGE} AS build-stage
 WORKDIR /usr/local/docker-build
 COPY gradle /usr/local/docker-build/gradle
 COPY build.gradle settings.gradle gradle.properties gradlew /usr/local/docker-build/
+RUN chmod +x gradlew
 RUN ./gradlew build --refresh-dependencies || return 0
 
 COPY src /usr/local/docker-build/src

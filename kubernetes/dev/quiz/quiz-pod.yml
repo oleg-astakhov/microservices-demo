@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quiz
+  namespace: micros
+  labels:
+    app.kubernetes.io/name: micros
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: quiz
+spec:
+  containers:
+    - name: quiz
+      image: javaoleg/micros-quiz:2024.0.0
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "500m"
+        limits:
+          memory: "512Mi"
+      ports:
+        - containerPort: 8080
+      env:
+        - name: SPRING_PROFILE
+          value: "prod"
+      livenessProbe:
+        exec:
+          command: [ "java", "-jar", "/usr/local/quiz/healthcheck.jar"]
+        initialDelaySeconds: 40
+        periodSeconds: 30
+        timeoutSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        exec:
+          command: [ "java", "-jar", "/usr/local/quiz/healthcheck.jar"]
+        initialDelaySeconds: 40
+        periodSeconds: 30
+        timeoutSeconds: 10
+        failureThreshold: 3

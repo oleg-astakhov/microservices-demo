@@ -19,7 +19,7 @@ Other players can join in too, and there's a leaderboard that displays the top p
 
 ## Focus Point
 
-The focus is on building a [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
+The focus is on building a cloud-native [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.
 
 **Frontend**
 
@@ -37,7 +37,9 @@ By using `JWT`, we can avoid duplicating authentication logic across each micros
 
 The following describes architecture so far (that is, it will be expanded and updated when functionality gets added).
 
-First of all, everything is inside Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+First of all, everything is inside Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+
+Being wrapped into docker containers and described as Helm charts for Kubernetes,the application meets the criteria for a `cloud-native` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
 
 Static files are being served by a dedicated frontend `Nginx` server.
 
@@ -63,7 +65,7 @@ This demonstrates and fulfills the requirement of `Resilience` (`High-Availabili
 
 `Gateway`, `Quiz` and `Gamification` are stateless microservices, so they can be replicated as much as needed. This fulfills the requirement of `Elastic` property of a reactive system.
 
-For Java microservices I've written a custom health check app, that pings `/actuator/health` endpoint, parses it, and specifically looks for `status` `UP`. So not only this endpoint has to respond with a `HTTP 2xx`, but also report that it's `UP`. This dedicated app is then used by the orchestration infrastructure, such as `Docker Swarm`, to remove unhealthy nodes, and then replace them with healthy ones.
+For Java microservices I've written a custom health check app, that pings `/actuator/health` endpoint, parses it, and specifically looks for `status` `UP`. So not only this endpoint has to respond with a `HTTP 2xx`, but also report that it's `UP`. This dedicated app is then used by the orchestration infrastructure, such as `Docker Swarm` or `Kubernetes`, to remove unhealthy nodes, and then replace them with healthy ones.
 
 The use of node replication, dedicated Nginx server for static files in the closest proximity, caching, circuit breakers, health-checks, non-blocking I/O technologies such as `Netty`, `Java's Virtual Threads`, `Spring Reactor`, `R2DBC` fulfill the requirement of `Responsive` property of a reactive system.
 
@@ -84,7 +86,32 @@ All of this is designed with commodity hardware in mind, making it cost-effectiv
 
 Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Docker Engine is enough too) on your local machine.
 
-### Step 2. For Windows Users Only
+### Step 1.1 (Optional): Enable and Prepare Kubernetes
+
+In `Docker Desktop` go to `Settings` → `Kubernetes` → `Enable Kubernetes`.
+
+**Install `metrics-server` for HPA (Horizontal Pod Autoscaler):**
+
+```shell
+$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml && kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--kubelet-insecure-tls"}]'
+```
+
+**Install Ingress Controller**
+
+```shell
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+```
+
+**Install Helm**
+
+SNAP:
+```shell
+$ sudo snap install helm --classic
+```
+
+Other options: https://helm.sh/docs/intro/install/
+
+### Step 1.2. For Windows Users Only
 
 You'll also need to have WSL2 (Windows Subsystem for Linux) enabled. If you don't already have it, Docker Desktop will enable it for you during the installation process.
 
@@ -114,7 +141,7 @@ From this point onwards you can interact with Docker engine through your Ubuntu 
 1. Type `Terminal` in the Windows taskbar search window →
 1. In the Terminal's top tab bar, click the drop-down arrow to open a new tab, then select "Ubuntu".
 
-### Step 3. Get the Project
+### Step 2. Get the Project
 
 You have 2 options.
 
@@ -140,9 +167,9 @@ $ git clone https://github.com/oleg-astakhov/microservices-demo.git
 1. Click `Download ZIP`
 1. Unzip the file to any location on your hard drive 
 
-### Step 4. Run the Project 
+### Step 3. Run the Project 
 
-**Option 1: using pre-built Docker images (faster boot time)**
+**Option 1: using pre-built Docker images and Docker Compose (faster boot time)**
 
 1. Navigate to the root of the project
 1. Run
@@ -151,7 +178,7 @@ $ git clone https://github.com/oleg-astakhov/microservices-demo.git
 $ ./up-prod-compose.sh
 ```
 
-**Option 2: build everything locally (slower boot time)**
+**Option 2: build everything locally using Docker Compose (slower boot time)**
 
 1. Navigate to the root of the project
 1. Run
@@ -161,7 +188,28 @@ $ ./up-dev-compose.sh
 ```
 *Note: you don't need to have Java installed because the source code is built inside the containers.*
 
-### Step 5. Play With the Project
+**Option 3: Using Kubernetes Helm charts**
+
+1. This option assumes you have enabled Kubernetes mode as describes in Step 1.1.
+1. Navigate to the `<root>/kubernetes`
+1. Run
+
+```shell
+$ helm install database ./prod-with-helm/database -n micros
+$ helm install message-broker ./prod-with-helm/message-broker -n micros
+$ helm install quiz ./prod-with-helm/quiz -n micros
+$ helm install gamification ./prod-with-helm/gamification -n micros
+$ helm install gateway ./prod-with-helm/gateway -n micros
+$ helm install frontend ./prod-with-helm/frontend -n micros
+```
+
+Then wait until all pods are up. Verify with command:
+```
+$ kubectl get pods
+```
+Look for column `READY`. All services must state `1/1`.
+
+### Step 4. Play With the Project
 
 Open your web browser and navigate to http://localhost/ . 
 
@@ -179,6 +227,7 @@ Once the services are up and running, you'll be presented with a Quiz game. Just
 ## Technical Stack
 
 * Docker
+* Helm charts for Kubernetes
 * Gradle
 * Git
 * Spock with Groovy
@@ -239,7 +288,7 @@ $ parallel-test.bat
 ```
 5. Run script (Linux):
 ```shell
-$ ./gradlew -i clean build -PrunInParallel=true
+$ ./parallel-test.sh
 ```
 Note that the tests will run in parallel on a multicore system.
 
@@ -255,6 +304,8 @@ Linux:
 ```shell
 $ ./parallel-test-ci.sh
 ```
+
+`./parallel-test-ci.sh` is in fact being used by the CI workflow on GitHub. See `<root>/.github/workflows/end-to-end-tests.yml`.
 
 ## TODO
 

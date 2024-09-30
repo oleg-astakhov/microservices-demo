@@ -1,0 +1,19 @@
+microservice:
+  name: frontend
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: javaoleg/micros-frontend:2024.0.0
+  port: 80
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "500m"
+    limits:
+      memory: "128Mi"
+  livenessDelay: 40
+  readinessDelay: 40
+
+env:
+  SPRING_PROFILE: prod

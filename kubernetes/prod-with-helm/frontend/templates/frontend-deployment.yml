@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.microservice.name }}
+  namespace: {{ .Values.microservice.namespace }}
+spec:
+  replicas: {{ .Values.microservice.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Values.microservice.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: {{ .Values.microservice.name }}
+    spec:
+      containers:
+        - name: {{ .Values.microservice.name }}
+          image: {{ .Values.workload.image }}
+          resources:
+            requests:
+              memory: {{ .Values.workload.resources.requests.memory }}
+              cpu: {{ .Values.workload.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.workload.resources.limits.memory }}
+          ports:
+            - containerPort: {{ .Values.workload.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.microservice.name }}-config
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "curl --fail http://localhost || exit 1"
+            initialDelaySeconds: {{ .Values.workload.livenessDelay }}
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "curl --fail http://localhost || exit 1"
+            initialDelaySeconds: {{ .Values.workload.readinessDelay }}
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3

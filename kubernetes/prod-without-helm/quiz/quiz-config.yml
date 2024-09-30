@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quiz-config
+  namespace: micros
+data:
+  SPRING_PROFILE: "prod"

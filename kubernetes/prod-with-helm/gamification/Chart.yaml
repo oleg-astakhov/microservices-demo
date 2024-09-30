@@ -1,0 +1,6 @@
+apiVersion: v2
+name: gamification
+description: A Helm chart for deploying the Gamification application, a backend service for managing gamification aspects of the quiz Application.
+version: 1.0.0
+maintainers:
+  - name: Oleg Astakhov

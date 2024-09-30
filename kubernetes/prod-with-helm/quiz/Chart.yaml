@@ -1,0 +1,6 @@
+apiVersion: v2
+name: quiz
+description: A Helm chart for deploying the Quiz application, a backend service for managing quiz questions and user answers.
+version: 1.0.0
+maintainers:
+  - name: Oleg Astakhov

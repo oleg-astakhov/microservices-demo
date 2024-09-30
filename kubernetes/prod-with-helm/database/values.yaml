@@ -1,0 +1,18 @@
+microservice:
+  name: database
+  namespace: micros
+
+workload:
+  image: javaoleg/micros-database:2024.0.0
+  port: 5432
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+    limits:
+      memory: "512Mi"
+  livenessDelay: 30
+  readinessDelay: 30
+
+env:
+  POSTGRES_PASSWORD: "bXlwYXNzd2Q="

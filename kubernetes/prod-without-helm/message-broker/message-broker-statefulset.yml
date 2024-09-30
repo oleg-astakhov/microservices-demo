@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: message-broker
+  namespace: micros
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: message-broker
+  serviceName: message-broker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: persistence
+        app.kubernetes.io/instance: message-broker
+    spec:
+      hostname: msg-broker-rabbit
+      containers:
+        - name: message-broker
+          image: javaoleg/micros-msg-broker:2024.0.0
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+          ports:
+            - containerPort: 15692 # Prometheus metrics
+            - containerPort: 5672 # AMPQ
+            - containerPort: 15672 # GUI
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "rabbitmq-diagnostics -q ping || exit 1"
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "rabbitmq-diagnostics -q ping || exit 1"
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: rabbitmq-persistent-storage
+              mountPath: /var/lib/rabbitmq
+  volumeClaimTemplates:
+    - metadata:
+        name: rabbitmq-persistent-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi

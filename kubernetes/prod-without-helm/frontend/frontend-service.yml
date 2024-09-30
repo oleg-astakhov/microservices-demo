@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: micros
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: frontend
+  ports:
+    - port: 80
+      targetPort: 80

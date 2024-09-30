@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database
+  namespace: micros
+  labels:
+    app.kubernetes.io/name: micros
+    app.kubernetes.io/component: persistence
+    app.kubernetes.io/instance: database
+spec:
+  containers:
+    - name: database
+      image: javaoleg/micros-database:2024.0.0
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "500m"
+        limits:
+          memory: "512Mi"
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_PASSWORD
+          value: mypasswd
+      livenessProbe:
+        exec:
+          command:
+            - pg_isready
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        exec:
+          command:
+            - pg_isready
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 10
+        failureThreshold: 3

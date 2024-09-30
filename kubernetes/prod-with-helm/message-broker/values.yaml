@@ -1,0 +1,17 @@
+microservice:
+  name: message-broker
+  namespace: micros
+
+workload:
+  image: javaoleg/micros-msg-broker:2024.0.0
+  portMetrics: 15692
+  portAmpq: 5672
+  portGui: 15672
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+    limits:
+      memory: "512Mi"
+  livenessDelay: 45
+  readinessDelay: 45

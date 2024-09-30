@@ -1,0 +1,6 @@
+apiVersion: v2
+name: gateway
+description: A Helm chart for deploying the Gateway application, a backend service for reverse-proxy.
+version: 1.0.0
+maintainers:
+  - name: Oleg Astakhov

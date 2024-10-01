@@ -29,9 +29,7 @@ I'm primarily a backend software engineer, so frontend is there only for demo pu
 
 Security isn't the primary focus of this system either, but it's definitely implied (e.g., `Spring Security`, `JSON Web Tokens`, etc.).
 
-However, depending on the architecture, not all services need to be secured in a traditional manner. For instance, once a request is within a private subnet, it can travel over HTTP instead of HTTPS, which can also boost performance.
-
-By using `JWT`, we can avoid duplicating authentication logic across each microservice, and concentrate on core business logic. The only requirement is to validate the JWT in each service. Of course, like everything, JWT comes with its own trade-offs, like token invalidation...
+However, depending on the architecture, not all services need to be secured in a traditional manner. For instance, once a request is within a private subnet, it can travel over HTTP instead of HTTPS (which also boosts performance). By using `JWT`, we can avoid duplicating authentication logic across each microservice, and concentrate on core business logic. The only requirement is to validate the JWT in each service.
 
 ## Architecture
 
@@ -39,7 +37,7 @@ The following describes architecture so far (that is, it will be expanded and up
 
 First of all, everything is inside Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
 
-Being wrapped into docker containers and described as Helm charts for Kubernetes,the application meets the criteria for a `cloud-native` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
+Being wrapped into docker containers and described as Helm charts for Kubernetes, the application meets the criteria for a `cloud-native` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
 
 Static files are being served by a dedicated frontend `Nginx` server.
 

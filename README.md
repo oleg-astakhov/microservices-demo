@@ -322,6 +322,6 @@ As of 03.09.2024 I am planning on implementing quite of few of the patterns/func
 
 Maybe: 
 
-* `MongoDB` as PoC for denormalized data 
+* `MongoDB` as PoC for some functionality that I've yet to imagine
 * `WebSockets over STOMP` as PoC for bidirectional high-performance communication
-* `JSON Web Tokens` for authentication
+* `JSON Web Tokens` for authentication / session validation

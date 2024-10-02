@@ -296,7 +296,7 @@ Note that the tests will run in parallel on a multicore system.
 
 ### Unit tests
 
-For fast access to an example class you can jump straight into `Quiz` microservice and look for classes:    
+For fast access to code examples you can jump straight into `Quiz` microservice and look for classes:    
 
 - `QuestionsCommonServiceImplSpec`.
 - `GetNextQuestionServiceImplSpec`.

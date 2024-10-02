@@ -106,14 +106,13 @@ SNAP:
 ```shell
 $ sudo snap install helm --classic
 ```
+Other options: https://helm.sh/docs/intro/install/
+
 **Create Namespace To Be Used By the App**
 
 ```shell
 $ kubectl create namespace micros
 ```
-
-Other options: https://helm.sh/docs/intro/install/
-
 ### Step 1.2. For Windows Users Only
 
 You'll also need to have WSL2 (Windows Subsystem for Linux) enabled. If you don't already have it, Docker Desktop will enable it for you during the installation process.

@@ -37,17 +37,6 @@ class E2EHttpClient {
         setHeaders(requestBase, this.headers)
 
         if (null != contentType) {
-            /**
-             * When I was migrating from SpringBoot 2.x to SpringBoot 3.x and then
-             * updating all other libs, at some point I was removing the dependency on
-             * "groovyx.net.http.HTTPBuilder" because it was old and abandoned
-             * and blocked bumping up other libraries (e.g. groovy).
-             *
-             * Through hours of debugging I've found that, for example,
-             * SpringBoot will not redirect after POST to /logout if no Accept
-             * header is specified. The consequence was that a new cookie was not
-             * returned/assigned upon logout to the calling HTTP client.
-             */
             requestBase.setHeader("Content-Type", contentType.toString())
             requestBase.setHeader("Accept", contentType.getAcceptHeader())
         }

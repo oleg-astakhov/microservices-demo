@@ -318,7 +318,7 @@ As of 03.09.2024 I am planning on implementing quite of few of the patterns/func
 * `Consul KV` for remote configs
 * `Server-Sent Events (SSE)` as PoC for pushing live data
 * `Graylog` for centralized logs
-* `Redis` for distributed cache
+* `Redis` for distributed cache / maybe locks
 
 Maybe: 
 

@@ -298,8 +298,8 @@ Note that the tests will run in parallel on a multicore system.
 
 For fast access to code examples you can jump straight into `Quiz` microservice and look for classes:    
 
-- `QuestionsCommonServiceImplSpec`.
-- `GetNextQuestionServiceImplSpec`.
+- `QuestionsCommonServiceImplSpec`
+- `GetNextQuestionServiceImplSpec`
  
 found under:
 

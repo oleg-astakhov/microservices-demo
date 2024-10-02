@@ -206,24 +206,24 @@ $ helm install gateway ./prod-with-helm/gateway -n micros
 $ helm install frontend ./prod-with-helm/frontend -n micros
 ```
 
-Then wait until all pods are up. Verify with command:
-```
-$ kubectl get pods
-```
-Look for column `READY`. All services must state `1/1`.
-
 ### Step 4. Play With the Project
 
 Open your web browser and navigate to http://localhost/ . 
 
 Please allow some time for all containers to start. If you see the error message `Sorry, quiz is currently unavailable`, it likely means the containers are still starting up. Click the `Try Again` button to retry.
 
-Additionally, you can verify the status of services by running:
+Additionally, if you use Docker Compose option to run the application, you can verify the status of services by running:
 
 ```bash
 $ docker container ls
 ```
 Look for `STATUS` column. You should see status `UP` as well as `(healthy)`, which means that services are ready to respond to requests.
+
+If you started the application using Kubernetes Helm charts then run:
+```shell
+$ kubectl get pods
+```
+Look for column `READY`. All services must state `1/1`.
 
 Once the services are up and running, you'll be presented with a Quiz game. Just follow the on-screen instructions.
 

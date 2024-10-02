@@ -294,17 +294,6 @@ $ ./parallel-test.sh
 ```
 Note that the tests will run in parallel on a multicore system.
 
-### Unit tests
-
-For fast access to code examples you can jump straight into `Quiz` microservice and look for classes:    
-
-- `QuestionsCommonServiceImplSpec`
-- `GetNextQuestionServiceImplSpec`
- 
-found under:
-
-`<projectRoot>\quiz\src\test\groovy\com\olegastakhov\microservices\quiz\<examples>`
-
 **CI/CD**
 
 Alternatively, there's a script which is designed to be used in a `CI/CD` environment, which will start Docker Compose, run then tests, and then stop Docker Compose.
@@ -319,6 +308,18 @@ $ ./parallel-test-ci.sh
 ```
 
 `./parallel-test-ci.sh` is in fact being used by the CI workflow on GitHub. See `<root>/.github/workflows/end-to-end-tests.yml`.
+
+
+### Unit tests
+
+For fast access to code examples you can jump straight into `Quiz` microservice and look for classes:
+
+- `QuestionsCommonServiceImplSpec`
+- `GetNextQuestionServiceImplSpec`
+
+found under:
+
+`<projectRoot>\quiz\src\test\groovy\com\olegastakhov\microservices\quiz\<examples>`
 
 ## TODO
 

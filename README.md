@@ -38,14 +38,14 @@ The following describes architecture so far (that is, it will be expanded and up
 First of all, the system is split into 6 microservices:
 - Frontend
 - Gateway / Reverse-Proxy
-- Quiz Service
+- Quiz Service (main "brains")
 - Gamification Service
 - Message Broker
 - Database
 
 This fulfills the requirement of having a `Microservices` based architecture, which is like a pre-condition for a reactive system.
 
-All microservices are wrapped into Docker conatiners. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+All microservices are wrapped into Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
 
 Being wrapped into docker containers and described as Helm charts for Kubernetes, the application meets the criteria for a `cloud-native` and also `distributed` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
 
@@ -69,7 +69,7 @@ The important thing to highlight here is that the first 2 widgets are provided b
 
 Similar approach happens with a history widget. If its code is broken, then you will still be able to play the game, but won't see the history of your last attempts.
 
-This demonstrates and fulfills the requirement of `Resilience` (`High-Availability, HA`) of a reactive system.
+This demonstrates and fulfills the requirement of `Resilience` (`High-Availability, HA`) of a reactive system. Additionally, behind the scenes, each widget maps to a separate REST endpoint. This is an intentional design choice that contributes to high availability. If a single HTTP request were used for all three widgets, and even one of them became unavailable, the entire request might return no data. The same issue would also occur in a server-side rendered UI. By leveraging SPA approach and decoupling the widgets into individual endpoints, we ensure better fault tolerance and resiliency.
 
 `Gateway`, `Quiz` and `Gamification` are stateless microservices, so they can be replicated as much as needed. This fulfills the requirement of `Elastic` property of a reactive system.
 
@@ -230,7 +230,7 @@ Look for `STATUS` column. You should see status `UP` as well as `(healthy)`, whi
 
 If you started the application using Kubernetes Helm charts then run:
 ```shell
-$ kubectl get pods
+$ kubectl get pods -n micros
 ```
 Look for column `READY`. All services must state `1/1`.
 

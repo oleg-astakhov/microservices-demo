@@ -35,9 +35,19 @@ However, depending on the architecture, not all services need to be secured in a
 
 The following describes architecture so far (that is, it will be expanded and updated when functionality gets added).
 
-First of all, everything is inside Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+First of all, the system is split into 6 microservices:
+- Frontend
+- Gateway / Reverse-Proxy
+- Quiz Service
+- Gamification Service
+- Message Broker
+- Database
 
-Being wrapped into docker containers and described as Helm charts for Kubernetes, the application meets the criteria for a `cloud-native` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
+This fulfills the requirement of having a `Microservices` based architecture, which is like a pre-condition for a reactive system.
+
+All microservices are wrapped into Docker conatiners. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+
+Being wrapped into docker containers and described as Helm charts for Kubernetes, the application meets the criteria for a `cloud-native` and also `distributed` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
 
 Static files are being served by a dedicated frontend `Nginx` server.
 

@@ -106,6 +106,11 @@ SNAP:
 ```shell
 $ sudo snap install helm --classic
 ```
+**Create Namespace To Be Used By the App**
+
+```shell
+$ kubectl create namespace micros
+```
 
 Other options: https://helm.sh/docs/intro/install/
 

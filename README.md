@@ -203,16 +203,11 @@ $ ./up-dev-compose.sh
 **Option 3: Using Kubernetes Helm charts**
 
 1. This option assumes you have enabled Kubernetes mode as describes in Step 1.1.
-1. Navigate to the `<root>/kubernetes`
+1. Navigate to the `<root>/kubernetes/prod-with-helm`
 1. Run
 
 ```shell
-$ helm install database ./prod-with-helm/database -n micros
-$ helm install message-broker ./prod-with-helm/message-broker -n micros
-$ helm install quiz ./prod-with-helm/quiz -n micros
-$ helm install gamification ./prod-with-helm/gamification -n micros
-$ helm install gateway ./prod-with-helm/gateway -n micros
-$ helm install frontend ./prod-with-helm/frontend -n micros
+$ helm install micros . -n micros
 ```
 
 ### Step 4. Play With the Project

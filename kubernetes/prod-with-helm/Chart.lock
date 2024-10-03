@@ -1,0 +1,21 @@
+dependencies:
+- name: database
+  repository: file://./database
+  version: 1.0.0
+- name: message-broker
+  repository: file://./message-broker
+  version: 1.0.0
+- name: quiz
+  repository: file://./quiz
+  version: 1.0.0
+- name: gamification
+  repository: file://./gamification
+  version: 1.0.0
+- name: gateway
+  repository: file://./gateway
+  version: 1.0.0
+- name: frontend
+  repository: file://./frontend
+  version: 1.0.0
+digest: sha256:441cf2bf1ee1490635cf8135e1d80e76a1b5a179c806c525c78c2bfb6c32f528
+generated: "2024-10-03T12:41:57.613103134+03:00"

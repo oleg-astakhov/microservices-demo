@@ -17,3 +17,8 @@ workload:
 
 env:
   SPRING_PROFILE: prod
+
+waitForServices:
+  quiz:
+    host: quiz.micros # <hostname>.<namespace>
+    port: 8080

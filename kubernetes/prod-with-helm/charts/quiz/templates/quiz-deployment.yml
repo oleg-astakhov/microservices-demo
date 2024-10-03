@@ -15,6 +15,27 @@ spec:
         app.kubernetes.io/component: backend
         app.kubernetes.io/instance: {{ .Values.microservice.name }}
     spec:
+      initContainers:
+        - name: wait-for-message-broker
+          image: busybox:1.37.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              until nc -vz {{ .Values.waitForServices.messageBroker.host }} {{ .Values.waitForServices.messageBroker.port }}; do
+                echo "Waiting for Message Broker to be ready..."
+                sleep 3
+              done
+        - name: wait-for-database
+          image: busybox:1.37.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              until nc -vz {{ .Values.waitForServices.database.host }} {{ .Values.waitForServices.database.port }}; do
+                echo "Waiting for Database to be ready..."
+                sleep 3
+              done
       containers:
         - name: {{ .Values.microservice.name }}
           image: {{ .Values.workload.image }}
@@ -31,14 +52,14 @@ spec:
                 name: {{ .Values.microservice.name }}-config
           livenessProbe:
             exec:
-              command: [ "java", "-jar", "/usr/local/gamification/healthcheck.jar" ]
+              command: [ "java", "-jar", "/usr/local/quiz/healthcheck.jar" ]
             initialDelaySeconds: {{ .Values.workload.livenessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 3
           readinessProbe:
             exec:
-              command: [ "java", "-jar", "/usr/local/gamification/healthcheck.jar" ]
+              command: [ "java", "-jar", "/usr/local/quiz/healthcheck.jar" ]
             initialDelaySeconds: {{ .Values.workload.readinessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10

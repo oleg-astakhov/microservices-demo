@@ -12,9 +12,20 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: micros
-        app.kubernetes.io/component: frontend
+        app.kubernetes.io/component: backend
         app.kubernetes.io/instance: {{ .Values.microservice.name }}
     spec:
+      initContainers:
+        - name: wait-for-quiz
+          image: busybox:1.37.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              until nc -vz {{ .Values.waitForServices.quiz.host }} {{ .Values.waitForServices.quiz.port }}; do
+                echo "Waiting for Quiz to be ready..."
+                sleep 3
+              done
       containers:
         - name: {{ .Values.microservice.name }}
           image: {{ .Values.workload.image }}
@@ -31,20 +42,14 @@ spec:
                 name: {{ .Values.microservice.name }}-config
           livenessProbe:
             exec:
-              command:
-                - /bin/sh
-                - -c
-                - "curl --fail http://localhost || exit 1"
+              command: [ "java", "-jar", "/usr/local/gateway/healthcheck.jar" ]
             initialDelaySeconds: {{ .Values.workload.livenessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 3
           readinessProbe:
             exec:
-              command:
-                - /bin/sh
-                - -c
-                - "curl --fail http://localhost || exit 1"
+              command: [ "java", "-jar", "/usr/local/gateway/healthcheck.jar" ]
             initialDelaySeconds: {{ .Values.workload.readinessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10

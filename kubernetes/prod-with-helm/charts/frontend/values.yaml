@@ -17,3 +17,8 @@ workload:
 
 env:
   SPRING_PROFILE: prod
+
+waitForServices:
+  gateway:
+    host: gateway.micros # <hostname>.<namespace>
+    port: 8080

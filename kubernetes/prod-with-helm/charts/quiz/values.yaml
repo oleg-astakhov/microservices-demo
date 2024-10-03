@@ -17,3 +17,11 @@ workload:
 
 env:
   SPRING_PROFILE: prod
+
+waitForServices:
+  messageBroker:
+    host: message-broker.micros # <hostname>.<namespace>
+    port: 5672
+  database:
+    host: database.micros # <hostname>.<namespace>
+    port: 5432

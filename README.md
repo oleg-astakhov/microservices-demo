@@ -1,4 +1,4 @@
-# Cloud-Native Reactive System (Demo Project)
+# Cloud-Native Reactive System (Demo Project by Oleg Astakhov)
 
 I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
 

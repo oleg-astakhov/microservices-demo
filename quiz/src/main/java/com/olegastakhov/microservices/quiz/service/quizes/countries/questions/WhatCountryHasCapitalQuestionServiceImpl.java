@@ -40,12 +40,14 @@ public class WhatCountryHasCapitalQuestionServiceImpl implements QuestionGenerat
     }
 
     public QuizData generate() {
-        final QuizData result = new QuizData();
-        result.setQuestionId(id);
         final CountryData randomCountry = common.getRandomItem(countries::list);
-        result.setQuestionItemId(randomCountry.getId());
-        result.setQuestion(getLocalizedQuestion(randomCountry));
-        result.setCorrectAnswer(getAnswerRetriever().apply(randomCountry));
+
+        final QuizData result = new QuizData()
+                .setQuestionId(id)
+                .setQuestionItemId(randomCountry.getId())
+                .setQuestion(getLocalizedQuestion(randomCountry))
+                .setCorrectAnswer(getAnswerRetriever().apply(randomCountry));
+
         final List<CountryData> options = common.getOptions(new GetOptionsInputData<CountryData>()
                         .setNumberOfOptions(4)
                         .setRandomQuestion(randomCountry)

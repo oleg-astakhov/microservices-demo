@@ -58,16 +58,17 @@ public class SubmitAnswerServiceImpl {
         final String correctAnswer = questionGenerator.getCorrectAnswer(input.getQuestionItemId());
         final boolean correct = correctAnswer.equals(input.getAnswer());
 
-        final QuizAttempt quizAttempt = new QuizAttempt();
-        quizAttempt.setReferenceId(UUID.randomUUID().toString());
-        quizAttempt.setUser(userService.findOrCreate(input.getUsername()));
-        quizAttempt.setCorrect(correct);
-        quizAttempt.setCorrectAnswer(correctAnswer);
-        quizAttempt.setUserAnswer(input.getAnswer());
-        quizAttempt.setQuestionId(input.getQuestionId());
-        quizAttempt.setQuestionItemId(input.getQuestionItemId());
-        quizAttempt.setQuestion(questionGenerator.getQuestion(input.getQuestionItemId()));
-        quizAttempt.setDateCreated(ZonedDateTime.now());
+        final QuizAttempt quizAttempt = new QuizAttempt()
+                .setReferenceId(UUID.randomUUID().toString())
+                .setUser(userService.findOrCreate(input.getUsername()))
+                .setCorrect(correct)
+                .setCorrectAnswer(correctAnswer)
+                .setUserAnswer(input.getAnswer())
+                .setQuestionId(input.getQuestionId())
+                .setQuestionItemId(input.getQuestionItemId())
+                .setQuestion(questionGenerator.getQuestion(input.getQuestionItemId()))
+                .setDateCreated(ZonedDateTime.now());
+
         quizAttemptRepository.save(quizAttempt);
         final SubmitAnswerResultDTO result = new SubmitAnswerResultDTO();
         result.setCorrect(correct);

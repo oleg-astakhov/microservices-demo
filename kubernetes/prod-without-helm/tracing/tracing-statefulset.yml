@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tracing
+  namespace: micros
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tracing
+  serviceName: tracing
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: tracing
+    spec:
+      containers:
+        - name: tracing
+          image: grafana/tempo:2.6.1
+          args: [ "-config.file=/etc/tempo.yaml" ]
+          volumeMounts:
+            - mountPath: '/etc/tempo.yaml'
+              name: tracing-config-volume
+              readOnly: true
+              subPath: tempo-local.yaml
+            - mountPath: "/tmp/tempo/blocks"  # Persistent storage path for Tempo data
+              name: tracing-data-volume
+          ports:
+            - containerPort: 9411 # push traces here with zipkin protocol
+            - containerPort: 3200 # querying tempo for traces, e.g. from Grafana
+      volumes:
+        - name: tracing-config-volume
+          configMap:
+            name: tracing
+  volumeClaimTemplates:
+    - metadata:
+        name: tracing-data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 256Mi

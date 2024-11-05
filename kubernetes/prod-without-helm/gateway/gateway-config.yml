@@ -4,4 +4,4 @@ metadata:
   name: gateway-config
   namespace: micros
 data:
-  SPRING_PROFILE: "prod"
+  SPRING_PROFILE: "prod-k8s"

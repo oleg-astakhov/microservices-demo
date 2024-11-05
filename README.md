@@ -1,7 +1,6 @@
 # Cloud-Native Reactive System (Demo Project by Oleg Astakhov)
 
-I started this project in August 2024, so it's still a work in progress. However, what's been committed so far is a functioning system that you can already start playing with.
-
+I started this project in August 2024, and by November 2024, I completed the initial scope I had planned. As of now, it's a functioning system that's ready for you to explore. That said, it's a great playground project, so I may continue adding features or making adjustments as technologies evolve.
 
 > FYI: Links provided in this document open in the same browser window. Use `CTRL` + `click` to open in new tab.
 
@@ -40,12 +39,20 @@ First of all, the system is split into 6 microservices:
 - Gateway / Reverse-Proxy
 - Quiz Service (main "brains")
 - Gamification Service
-- Message Broker
-- Database
+- Message Broker (RabbitMQ)
+- Database (Postgres)
+
+As well as 4 infrastructural components that out system integrates with:
+- Metrics backend (Prometheus)
+- Centralized logging backend (Grafana Loki)
+- Observability visualization (Grafana)
+- Tracing backend (Grafana Tempo)
+
+So 10 services which communicate with each other in a cluster.
 
 This fulfills the requirement of having a `Microservices` based architecture, which is like a pre-condition for a reactive system.
 
-All microservices are wrapped into Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`.
+All microservices are wrapped into Docker containers. So, orchestration (`Service Registry`, `Service Discovery`, `Load Balancing` and cross-service `Resilience`) are provided implicitly by the use of `Docker Swarm` or `Kubernetes`, as well as a `Message Broker` (e.g. load balancing between subscribers). In other words, these functionalities are provided out-of-the box and there's no need to reimplement them using `Spring Cloud *`. In specific cases, some patterns are used explicitly, like `Circuit Breaker`. Additionally, since Kubernetes doesn't load-balance persistent connections, client-side load balancing is used to handle this scenario as PoC.
 
 Being wrapped into docker containers and described as Helm charts for Kubernetes, the application meets the criteria for a `cloud-native` and also `distributed` architecture. Additionally, since Kubernetes is vendor-agnostic itself, then the application is cloud-provider independent as well. My goal is to design software this way as much as possible to minimize the risk of vendor lock-in.
 
@@ -73,7 +80,7 @@ This demonstrates and fulfills the requirement of `Resilience` (`High-Availabili
 
 `Frontend`, `Gateway`, `Quiz` and `Gamification` are stateless microservices, so they can be replicated as much as needed. This fulfills the requirement of `Elastic` property of a reactive system. For the purposes of PoC I've added a Kubernetes `HorizontalPodAutoscaler` for the `Quiz` microservice.
 
-For Java microservices I've written a custom health check app, that pings `/actuator/health` endpoint, parses it, and specifically looks for `status` `UP`. So not only this endpoint has to respond with a `HTTP 2xx`, but also report that it's `UP`. This dedicated app is then used by the orchestration infrastructure, such as `Docker Swarm` or `Kubernetes`, to remove unhealthy nodes, and then replace them with healthy ones.
+For Java microservices I've written a custom health check app, that pings `/actuator/health` endpoint, parses it, and specifically looks for `status` `UP`. So not only this endpoint has to respond with a `HTTP 2xx`, but also report that it's `UP`. This dedicated app is then used by the orchestration infrastructure, such as `Kubernetes` or `Docker Swarm`, to remove unhealthy nodes, and then replace them with healthy ones.
 
 The use of node replication, dedicated Nginx server for static files in the closest proximity, caching, circuit breakers, health-checks, non-blocking I/O technologies such as `Netty`, `Java's Virtual Threads`, `Spring Reactor`, `R2DBC` fulfill the requirement of `Responsive` property of a reactive system.
 
@@ -87,6 +94,25 @@ The use of node replication, dedicated Nginx server for static files in the clos
 So, each microservice uses its own database, but which are hosted on the same physical database server.
 
 All of this is designed with commodity hardware in mind, making it cost-effective and horizontally scalable on cloud platforms to ensure consistently high performance.
+
+**Observability**
+
+We also have 5 components that provide observability for our system:
+
+- Metrics backend (Prometheus)
+- Centralized logging backend (Grafana Loki)
+- Tracing backend (Grafana Tempo)
+- Observability visualization (Grafana)
+- Log forwarder agent (Fluent Bit)
+
+All 3 observability pillars (logging, metrics, tracing) can be viewed in a single `Grafana` instance.
+
+Metrics are implemented using `Micrometer` library.   
+Tracing is implemented using `Micrometer Tracing` with the `Zipkin` protocol to `Grafana Tempo`.
+
+Centralized logging in Kubernetes setup relies on sending logs to `STDOUT`/`STDERR`, which Kubernetes captures and stores as files for monitoring. The log forwarding agent, `Fluent Bit`, collects these logs and forwards them to `Grafana Tempo`.
+
+Metrics follow a pull-based approach, implemented with `Prometheus`, which uses the Kubernetes API for service discovery to identify sources for metric collection within the cluster. Metrics are provided via Spring's `Actuator` endpoints, with the `Micrometer` library exposing them at `/actuator/prometheus`. Additionally, a `Node Exporter` component has been added as a PoC to gather metrics at the node level, offering insights beyond individual pods or containers. 
 
 ## Starting the project
 
@@ -231,14 +257,30 @@ Look for column `READY`. All services must state `1/1`.
 
 Once the services are up and running, you'll be presented with a Quiz game. Just follow the on-screen instructions.
 
+### Step 5. Observe the Project
+
+To view logs, metrics, and traces provided by Grafana, open your web browser and navigate to:
+1) When running through Kubernetes: http://localhost:32000 (exposed using `NodePort` for demo purposes)
+2) When running through Docker Compose: http://localhost:3000
+
+If you want to access only metrics backend provided by Prometheus, open your web browser and navigate to: 
+1) When running through Kubernetes: http://localhost:32090 (exposed using `NodePort` for demo purposes)
+2) When running through Docker Compose: http://localhost:9090
+
 ## Technical Stack
 
 * Docker
-* Helm charts for Kubernetes
+* Kubernetes
+* Helm charts
 * Gradle
 * Git
 * Spock with Groovy
 * Java 22 with Virtual Threads
+* Prometheus (metrics backend)
+* Grafana Tempo (tracing backend)
+* Grafana Loki (logging backend)
+* Grafana (observability visualization)
+* Fluent Bit (log forwarder)
 * Spring Reactor
 * Spring WebFlux
 * Spring Boot 3
@@ -328,17 +370,12 @@ found under:
 
 ## TODO
 
-As of 03.09.2024 I am planning on implementing quite of few of the patterns/functionality, such as:
-* `Spring Cloud Sleuth` tracing with `Zipkin`
-* `Prometheus` metrics with `Grafana`
-* `Consul KV` for remote configs
-* `Server-Sent Events (SSE)` as PoC for pushing live data
-* `Graylog` for centralized logs
-* `Redis` for distributed cache / maybe locks
-* `IaC` configuration files (e.g. for `eksctl`)
-
 Maybe: 
 
 * `MongoDB` as PoC for some functionality that I've yet to imagine
+* `Server-Sent Events (SSE)` as PoC for pushing live data
 * `WebSockets over STOMP` as PoC for bidirectional high-performance communication
 * `JSON Web Tokens` for authentication / session validation
+* `Consul KV` for remote configs
+* `Redis` for distributed cache / maybe locks
+* `IaC` configuration files (e.g. for `eksctl`)

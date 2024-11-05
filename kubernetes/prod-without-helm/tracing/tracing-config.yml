@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tracing
+  namespace: micros
+data:
+  tempo-local.yaml: |
+    server:
+      http_listen_port: 3200
+
+    distributor:
+      receivers:
+        zipkin:
+
+    storage:
+      trace:
+        backend: local
+        local:
+          path: /tmp/tempo/blocks

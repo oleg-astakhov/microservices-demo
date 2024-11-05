@@ -1,0 +1,6 @@
+microservice:
+  name: log-forward
+  namespace: micros
+
+workload:
+  image: fluent/fluent-bit:3.1.9

@@ -1,0 +1,10 @@
+microservice:
+  name: metrics
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: prom/prometheus:v2.55.0
+  ports:
+    container: 9090
+    node: 32090

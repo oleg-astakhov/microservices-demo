@@ -2,10 +2,14 @@ package com.olegastakhov.microservices.healthcheck;
 
 import com.olegastakhov.microservices.healthcheck.processors.ProcessorFinder;
 import com.olegastakhov.microservices.healthcheck.processors.ModeProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class HealthCheckApp {
+    private static final Logger log = LoggerFactory.getLogger(HealthCheckApp.class);
+
     private static final int DOCKER_ERROR_EXIT_CODE = 1;  // Docker treats only code 1 as unhealthy indicator
     private static final int SUCCESS_EXIT_CODE = 0;
 
@@ -14,7 +18,7 @@ public class HealthCheckApp {
             process(args);
             System.exit(SUCCESS_EXIT_CODE);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             System.exit(DOCKER_ERROR_EXIT_CODE);
         }
     }

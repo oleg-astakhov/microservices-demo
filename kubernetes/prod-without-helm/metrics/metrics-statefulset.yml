@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: metrics
+  namespace: micros
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: metrics
+  serviceName: metrics
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: metrics
+    spec:
+      containers:
+        - name: metrics
+          image: prom/prometheus:v2.55.0
+          args:
+            - --enable-feature=exemplar-storage
+            - --config.file=/etc/prometheus/prometheus.yml
+          volumeMounts:
+            - mountPath: '/etc/prometheus/prometheus.yml'
+              name: metrics-config-volume
+              readOnly: true
+              subPath: prometheus.yml
+            - mountPath: "/prometheus"
+              name: metrics-data-volume
+          ports:
+            - containerPort: 9090
+      volumes:
+        - name: metrics-config-volume
+          configMap:
+            name: metrics
+  volumeClaimTemplates:
+    - metadata:
+        name: metrics-data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 256Mi

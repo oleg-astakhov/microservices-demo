@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-forward
+  namespace: micros
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: log-forward
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: log-forward
+    spec:
+      containers:
+        - name: log-forward
+          image: fluent/fluent-bit:3.1.9
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+              readOnly: true
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - mountPath: '/fluent-bit/etc/fluent-bit.conf'
+              name: log-forward-config-volume
+              readOnly: true
+              subPath: fluent-bit.conf
+      volumes:
+        - name: log-forward-config-volume
+          configMap:
+            name: log-forward
+        - name: varlog
+          hostPath:
+            # this contains symbolic links
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            # this contains real files
+            path: /var/lib/docker/containers

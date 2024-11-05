@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.microservice.name }}
+  namespace: {{ .Values.microservice.namespace }}
+spec:
+  ports:
+    - name: zipkin
+      port: {{ .Values.workload.ports.receiveTraces }}
+      targetPort: {{ .Values.workload.ports.receiveTraces }}
+    - name: query
+      port: {{ .Values.workload.ports.queryTraces }}
+      targetPort: {{ .Values.workload.ports.queryTraces }}
+  selector:
+    app.kubernetes.io/instance: {{ .Values.microservice.name }}
+  type: ClusterIP
+  clusterIP: None

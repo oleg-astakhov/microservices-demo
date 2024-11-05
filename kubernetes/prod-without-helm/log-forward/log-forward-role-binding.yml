@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: log-forward-role-binding
+  namespace: micros
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: micros
+roleRef:
+  kind: ClusterRole
+  name: log-forward-role
+  apiGroup: rbac.authorization.k8s.io

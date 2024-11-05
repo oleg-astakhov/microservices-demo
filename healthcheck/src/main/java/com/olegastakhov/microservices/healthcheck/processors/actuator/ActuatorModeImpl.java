@@ -7,6 +7,8 @@ import com.olegastakhov.microservices.healthcheck.exception.ConfigurationExcepti
 import com.olegastakhov.microservices.healthcheck.exception.NotHealthyException;
 import com.olegastakhov.microservices.healthcheck.Util;
 import com.olegastakhov.microservices.healthcheck.processors.ModeProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ActuatorModeImpl implements ModeProcessor {
+    private static final Logger log = LoggerFactory.getLogger(ActuatorModeImpl.class);
+
     public static final String MODE_ID = "actuator";
     private final static String DEFAULT_URL = "http://localhost:8080/actuator/health";
     private final static int DEFAULT_STATUS_CODE = 200;
@@ -50,7 +54,7 @@ public class ActuatorModeImpl implements ModeProcessor {
         if (!expectedStatus.equals(status)) {
             throw new NotHealthyException(String.format("Non-expected status. Expecting: %s. Got: %s", expectedStatus, status));
         }
-        System.out.println("Service is UP");
+        log.info("Service is UP");
     }
 
     private Map<String, Object> parseJsonAsMap(final String body,
@@ -76,7 +80,7 @@ public class ActuatorModeImpl implements ModeProcessor {
 
     private Config parseConfig(List<String> arguments) {
         if (arguments.isEmpty()) {
-            System.out.println(String.format("Using default url [%s]. To override: %s", DEFAULT_URL, USAGE_INSTRUCTIONS));
+            log.info("Using default url [{}]. To override: %{}", DEFAULT_URL, USAGE_INSTRUCTIONS);
             return new Config()
                     .setHealthCheckUrl(DEFAULT_URL)
                     .setStatusCode(DEFAULT_STATUS_CODE);

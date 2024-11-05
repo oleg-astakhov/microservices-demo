@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+# This role is to provide Service Discovery capabilities to Spring Cloud Gateway
+# which needs to access a list of endpoints available to a Kubernetes Service
+# To be able to load-balance between them. Why custom load-balancing?
+# Because Kubernetes doesn't load-balance persistent connections, otherwise
+# we could simply rely on the ClusterIP/iptables load-balancing. Or turn off
+# keepAlive connections, but that means not using advancements in technology.
+metadata:
+  namespace: micros
+  name: gateway-role
+rules:
+  - apiGroups: [""]
+    resources:
+      - services
+      - endpoints
+    verbs: ["get", "list", "watch"]

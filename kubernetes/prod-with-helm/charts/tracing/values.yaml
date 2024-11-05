@@ -1,0 +1,10 @@
+microservice:
+  name: tracing
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: grafana/tempo:2.6.1
+  ports:
+    receiveTraces: 9411 # push traces here with zipkin protocol
+    queryTraces: 3200 # querying tempo for traces, e.g. from Grafana

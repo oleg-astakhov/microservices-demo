@@ -4,7 +4,7 @@ microservice:
   replicas: 1
 
 workload:
-  image: javaoleg/micros-gateway:2024.0.0
+  image: javaoleg/micros-gateway:2024.1.0
   port: 8080
   resources:
     requests:
@@ -16,7 +16,7 @@ workload:
   readinessDelay: 40
 
 env:
-  SPRING_PROFILE: prod
+  SPRING_PROFILE: prod-k8s
 
 waitForServices:
   quiz:

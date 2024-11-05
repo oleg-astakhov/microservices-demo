@@ -285,6 +285,8 @@ If you want to access only metrics backend provided by Prometheus, open your web
 * Spring WebFlux
 * Spring Boot 3
 * Spring Boot Actuator
+* Micrometer (metrics)
+* Micrometer Tracing (span and trace ids)
 * Netty (for Java services)
 * RabbitMQ 3 (over AMPQ)
 * Nginx (for static content) 

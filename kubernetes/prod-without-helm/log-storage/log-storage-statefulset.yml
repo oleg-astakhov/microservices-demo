@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: log-storage
+  namespace: micros
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: log-storage
+  serviceName: log-storage
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: log-storage
+    spec:
+      containers:
+        - name: log-storage
+          image: grafana/loki:3.1.2
+          args: [ "-config.file=/etc/loki/local-config.yaml" ]
+          volumeMounts:
+            - mountPath: "/data"  # Persistent storage path for Loki data
+              name: log-data-volume
+          ports:
+            - containerPort: 3100
+  volumeClaimTemplates:
+    - metadata:
+        name: log-data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 512Mi

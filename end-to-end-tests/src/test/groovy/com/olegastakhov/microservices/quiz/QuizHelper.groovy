@@ -42,6 +42,14 @@ class QuizHelper {
         return result.responseBody.data as Map
     }
 
+    static Map getLogs(final Map<String, Object> params) {
+        Helper.putDefaultOrGetActual(params, "ns_ajaxJsonHttpClient_instance", { HTTPClientFactory.getInstance().createPublicRestClient() })
+        params << [ns_navi_path: "/quiz/logs"]
+        E2EMapResponseBody result = HttpOperationsUtil.httpGETAsJsonAjax(params)
+        params << [ns_quiz_logData: result.responseBody.data as Map]
+        return result.responseBody.data as Map
+    }
+
     static String getAnyIncorrectAnswer(List options, String correctAnswer) {
         return options.stream()
                 .filter { it.valueForBackend != correctAnswer }

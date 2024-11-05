@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.microservice.name }}-ingress
-  namespace: {{ .Values.microservice.namespace }}
+  name: {{ .Values.target.projectName }}-ingress
+  namespace: {{ .Values.target.namespace }}
 spec:
   ingressClassName: nginx
   rules:
@@ -12,7 +12,7 @@ spec:
             path: /
             backend:
               service:
-                name: {{ .Values.microservice.name }}
+                name: {{ .Values.target.microserviceName }}
                 port:
                   number: 80
                   

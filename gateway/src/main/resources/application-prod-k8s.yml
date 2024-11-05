@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes: # Note that routes are not-merged from multiple Spring profiles, they are overridden
+        - id: quiz
+          uri: lb://quiz:8080/
+          predicates:
+            - Path=/quiz/**
+        - id: gamification
+          uri: lb://gamification:8080/
+          predicates:
+            - Path=/leaderboard/**

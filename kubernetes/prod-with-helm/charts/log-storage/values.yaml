@@ -1,0 +1,8 @@
+microservice:
+  name: log-storage
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: grafana/loki:3.1.2
+  port: 3100

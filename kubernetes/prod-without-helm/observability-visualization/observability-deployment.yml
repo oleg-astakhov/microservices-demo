@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: observability-visualization
+  namespace: micros
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: observability-visualization
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micros
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: observability-visualization
+    spec:
+      containers:
+        - name: observability-visualization
+          image: grafana/grafana:11.3.0
+          volumeMounts:
+            - mountPath: '/etc/grafana/provisioning/datasources/datasource.yml'
+              name: observability-visualization-config-volume
+              readOnly: true
+              subPath: datasource.yml
+            - mountPath: '/etc/grafana/provisioning/dashboards/dashboard.yml'
+              name: observability-visualization-config-volume
+              readOnly: true
+              subPath: dashboard.yml
+            - mountPath: '/etc/grafana/provisioning/dashboards/logs_traces_metrics.json'
+              name: observability-visualization-config-volume
+              readOnly: true
+              subPath: logs_traces_metrics.json
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: "Admin"
+            - name: GF_AUTH_DISABLE_LOGIN_FORM
+              value: "true"
+      volumes:
+        - name: observability-visualization-config-volume
+          configMap:
+            name: observability-visualization

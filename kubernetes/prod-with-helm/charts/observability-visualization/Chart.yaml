@@ -1,0 +1,6 @@
+apiVersion: v2
+name: observability-visualization
+description: A Helm chart for deploying the observability visualization backend service.
+version: 1.0.0
+maintainers:
+  - name: Oleg Astakhov

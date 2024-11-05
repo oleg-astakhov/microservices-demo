@@ -34,6 +34,8 @@ spec:
             exec:
               command:
                 - pg_isready
+                - -U
+                - postgres
             initialDelaySeconds: {{ .Values.workload.livenessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10
@@ -42,6 +44,8 @@ spec:
             exec:
               command:
                 - pg_isready
+                - -U
+                - postgres
             initialDelaySeconds: {{ .Values.workload.readinessDelay }}
             periodSeconds: 30
             timeoutSeconds: 10

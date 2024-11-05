@@ -1,0 +1,10 @@
+microservice:
+  name: node-exporter
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: prom/node-exporter:v1.8.2
+  ports:
+    host: 9100
+    container: 9100

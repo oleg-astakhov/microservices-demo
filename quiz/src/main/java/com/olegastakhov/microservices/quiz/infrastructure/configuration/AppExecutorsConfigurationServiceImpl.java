@@ -7,13 +7,15 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 @Configuration
 public class AppExecutorsConfigurationServiceImpl {
 
     @Bean(name = "GeneralPurposeVirtualThreadExecutor")
     public ExecutorService generalPurposeVirtualThreadExecutor() {
-        return Executors.newVirtualThreadPerTaskExecutor();
+        final ThreadFactory factory = Thread.ofVirtual().name("v-Thread", 0L).factory();
+        return Executors.newThreadPerTaskExecutor(factory);
     }
 
     @Bean(name = "GeneralPurposeVirtualThreadScheduler")

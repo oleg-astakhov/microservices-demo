@@ -10,7 +10,13 @@ import com.olegastakhov.microservices.quiz.common.dto.ResultDTO;
 import com.olegastakhov.microservices.quiz.service.UserServiceImpl;
 import com.olegastakhov.microservices.quiz.infrastructure.localization.LocalizationServiceImpl;
 import io.micrometer.common.util.StringUtils;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.observation.annotation.Observed;
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +27,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class SubmitAnswerServiceImpl {
+    private static final Logger log = LoggerFactory.getLogger(SubmitAnswerServiceImpl.class);
 
     @Autowired
     private Collection<QuestionGenerator> questionGenerators;
@@ -32,10 +39,17 @@ public class SubmitAnswerServiceImpl {
     private LocalizationServiceImpl localization;
     @Autowired
     private QuizAnsweredEventPublisherServiceImpl eventPublisher;
+    @Autowired
+    private Tracer tracer;
+    @Autowired
+    private MeterRegistry meterRegistry;
 
     private static final Pattern USERNAME_PATTERN =Pattern.compile("^[0-9a-z\\-]{3,}$");
 
 
+    @Observed(name = "submit_answer", // metric name
+            contextualName = "submitting_answer", // span name
+            lowCardinalityKeyValues = {"type", "quiz"}) // tag for both metric & span
     @Transactional
     public ResultDTO<SubmitAnswerResultDTO> submitAnswer(SubmitAnswerData input) {
         if (StringUtils.isBlank(input.getQuestionId())) {
@@ -46,7 +60,12 @@ public class SubmitAnswerServiceImpl {
             // passed by programmer from UI, user is not at fault
             throw new MandatoryFieldNotInitializedOnClientException("questionItemId is null when not expected");
         }
-        return new ResultDTO<>(submit(input));
+        Span newSpan = this.tracer.nextSpan().name("submitQuizAnswer");
+        try (Tracer.SpanInScope ws = tracer.withSpan(newSpan.start())) {
+            return new ResultDTO<>(submit(input));
+        } finally {
+            newSpan.end();
+        }
     }
 
     private SubmitAnswerResultDTO submit(SubmitAnswerData input) {
@@ -79,7 +98,25 @@ public class SubmitAnswerServiceImpl {
             result.setMotivationMessage(localization.getLocalizedMessage("submitAnswer.motivationMessage.wrong", correctAnswer));
         }
 
-        eventPublisher.quizAnswered(quizAttempt);
+        if (correct) {
+            /**
+             * PoC custom metrics
+             */
+            meterRegistry.counter("quiz_attempt_correct").increment();
+        } else {
+            meterRegistry.counter("quiz_attempt_wrong").increment();
+        }
+
+
+        /**
+         * PoC custom tracing spans
+         */
+        Span newSpan = tracer.nextSpan().name("publishQuizAttemptEvent");
+        try (Tracer.SpanInScope ws = tracer.withSpan(newSpan.start())) {
+            eventPublisher.quizAnswered(quizAttempt);
+        } finally {
+            newSpan.end();
+        }
 
         return result;
     }

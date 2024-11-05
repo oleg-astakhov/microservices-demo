@@ -1,0 +1,19 @@
+microservice:
+  name: observability-visualization
+  namespace: micros
+  replicas: 1
+
+workload:
+  image: grafana/grafana:11.3.0
+  ports:
+    node: 32000
+    target: 3000
+    service: 3000
+
+env:
+  - name: GF_AUTH_ANONYMOUS_ENABLED
+    value: "true"
+  - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+    value: "Admin"
+  - name: GF_AUTH_DISABLE_LOGIN_FORM
+    value: "true"

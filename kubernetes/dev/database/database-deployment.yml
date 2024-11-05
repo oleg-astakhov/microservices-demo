@@ -33,6 +33,8 @@ spec:
             exec:
               command:
                 - pg_isready
+                - -U
+                - postgres
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 10
@@ -41,6 +43,8 @@ spec:
             exec:
               command:
                 - pg_isready
+                - -U
+                - postgres
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 10

@@ -1,0 +1,4 @@
+target:
+  projectName: micros
+  microserviceName: frontend
+  namespace: micros

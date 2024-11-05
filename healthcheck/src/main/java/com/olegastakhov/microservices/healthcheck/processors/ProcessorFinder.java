@@ -1,10 +1,13 @@
 package com.olegastakhov.microservices.healthcheck.processors;
 
 import com.olegastakhov.microservices.healthcheck.exception.ConfigurationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class ProcessorFinder {
+    private static final Logger log = LoggerFactory.getLogger(ProcessorFinder.class);
 
     private static final List<String> SUPPORTED_MODES = ModeImplementerInstances.getInstance().getProcessors().stream()
             .map(ModeProcessor::getModeId).toList();
@@ -16,7 +19,7 @@ public class ProcessorFinder {
                     .filter(ModeProcessor::isDefault)
                     .findAny().orElseThrow(() -> new ConfigurationException("Default mode processor has not been set"));
 
-            System.out.println(String.format("Using default processor [%s]. To override: %s", defaultProcessor.getModeId(), USAGE_INSTRUCTIONS));
+            log.info("Using default processor [{}]. To override: {}", defaultProcessor.getModeId(), USAGE_INSTRUCTIONS);
             return defaultProcessor;
         }
 

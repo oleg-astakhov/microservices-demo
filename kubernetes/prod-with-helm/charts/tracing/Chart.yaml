@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tracing
+description: A Helm chart for deploying the tracing backend service.
+version: 1.0.0
+maintainers:
+  - name: Oleg Astakhov

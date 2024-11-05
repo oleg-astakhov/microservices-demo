@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration>
+    <Properties>
+        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p (%c{1}) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${filePatternLayout}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+
+        <logger name="com.olegastakhov" level="DEBUG" />
+    </Loggers>
+</Configuration>

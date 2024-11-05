@@ -27,10 +27,22 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,prometheus
   health:
     rabbit:
       enabled: false
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  zipkin:
+    tracing:
+      endpoint: http://tracing:9411/api/v2/spans
 
 amqp:
   exchange:

@@ -4,7 +4,7 @@
     <Properties>
         <Property name="baseDir">/var/log/${spring:spring.application.name}</Property>
         <Property name="app">${spring:spring.application.name}</Property>
-        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] (%c) - %m%n</Property>
+        <Property name="filePatternLayout">%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [app=${spring:spring.application.name},traceId=%X{traceId},spanId=%X{spanId}] [%t] (%c) - %m%n</Property>
     </Properties>
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">

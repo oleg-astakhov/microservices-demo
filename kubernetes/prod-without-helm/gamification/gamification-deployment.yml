@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gamification
-          image: javaoleg/micros-gamification:2024.0.0
+          image: javaoleg/micros-gamification:2024.1.0
           resources:
             requests:
               memory: "256Mi"

@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: {{ .Values.microservice.namespace }}
+  name: log-forward-role
+rules:
+  - apiGroups: [""]
+    resources:
+      - pods
+      - namespaces
+      - nodes
+      - nodes/metrics
+      - nodes/proxy
+    verbs: ["get", "list", "watch"]

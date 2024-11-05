@@ -5,11 +5,12 @@ import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuestionGen
 import com.olegastakhov.microservices.quiz.service.quizes.common.api.QuizData;
 import com.olegastakhov.microservices.quiz.common.dto.ResultDTO;
 import com.olegastakhov.microservices.quiz.infrastructure.localization.LocalizationServiceImpl;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.observation.annotation.Observed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 
 import java.util.List;
 import java.util.Random;
@@ -17,6 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class GetNextQuestionServiceImpl {
+    private static final Logger log = LoggerFactory.getLogger(GetNextQuestionServiceImpl.class);
+
     @Autowired
     private List<QuestionGenerator> questionGenerators;
     @Autowired
@@ -24,13 +27,18 @@ public class GetNextQuestionServiceImpl {
     @Autowired
     EnvironmentServiceImpl environmentService;
 
-    @Autowired
-    @Qualifier("GeneralPurposeVirtualThreadScheduler")
-    private Scheduler virtualThreadScheduler;
-
-    public Mono<ResultDTO<QuizDTO>> getNextQuestion() {
-        return Mono.fromCallable(() -> new ResultDTO<>(getQuizDTO()))
-                .subscribeOn(virtualThreadScheduler);
+    /**
+     * PoC AOP-driven vendor-neutral metrics
+     */
+    @Timed(value = "get_next_question_time", description = "Time taken to generate next question")
+    /**
+     * PoC AOP-driven vendor-neutral metrics and traces
+     */
+    @Observed(name = "next_question", // metric name
+            contextualName = "getting_next_question", // span name
+            lowCardinalityKeyValues = {"type", "quiz"}) // tag for both metric & span
+    public ResultDTO<QuizDTO> getNextQuestion() {
+        return new ResultDTO<>(getQuizDTO());
     }
 
     private QuizDTO getQuizDTO() {

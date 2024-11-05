@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: quiz
-          image: javaoleg/micros-quiz:2024.0.0
+          image: javaoleg/micros-quiz:2024.1.0
           resources:
             requests:
               memory: "256Mi"
-              cpu: "500m"
+              cpu: "900m"
             limits:
-              memory: "512Mi"
+              memory: "712Mi"
           ports:
             - containerPort: 8080
           envFrom:

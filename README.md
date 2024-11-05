@@ -127,7 +127,7 @@ In `Docker Desktop` go to `Settings` → `Kubernetes` → `Enable Kubernetes`.
 **Install `metrics-server` for HPA (Horizontal Pod Autoscaler):**
 
 ```shell
-$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml && kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--kubelet-insecure-tls"}]'
+$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.2/components.yaml && kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--kubelet-insecure-tls"}]'
 ```
 
 **Install Ingress Controller**

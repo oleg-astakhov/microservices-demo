@@ -18,7 +18,7 @@ Other players can join in too, and there's a leaderboard that displays the top p
 
 Here's the frontend looks like:
 
-![The UI of the demo application](./images/frontend_light.png "The UI of the demo application")
+![The UI of the demo application](./images/frontend_light_v2.png "The UI of the demo application")
 
 *The UI of the demo application*
 

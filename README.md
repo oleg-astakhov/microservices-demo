@@ -16,6 +16,12 @@ For every correct answer, you earn a score. If you answer incorrectly, you're sh
 
 Other players can join in too, and there's a leaderboard that displays the top players and their scores.
 
+Here's the frontend looks like:
+
+![The UI of the demo application](./images/frontend_light.png "The UI of the demo application")
+
+*The UI of the demo application*
+
 ## Focus Point
 
 The focus is on building a cloud-native [Reactive System](https://www.reactivemanifesto.org/). For some of its constituent components, I am employing reactive programming model as well. In the best-case scenario—all of them.

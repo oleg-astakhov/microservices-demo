@@ -16,7 +16,7 @@ For every correct answer, you earn a score. If you answer incorrectly, you're sh
 
 Other players can join in too, and there's a leaderboard that displays the top players and their scores.
 
-Here's the frontend looks like:
+Here's how the frontend looks like:
 
 ![The UI of the demo application](./images/frontend_light_v2.png "The UI of the demo application")
 

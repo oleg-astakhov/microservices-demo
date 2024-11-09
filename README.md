@@ -132,17 +132,20 @@ In `Docker Desktop` go to `Settings` → `Kubernetes` → `Enable Kubernetes`.
 
 **Install `metrics-server` for HPA (Horizontal Pod Autoscaler):**
 
+1. Navigate to the `<root>/kubernetes/prerequisites`
+1. Run
+
 ```shell
-$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.2/components.yaml && kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--kubelet-insecure-tls"}]'
+$ kubectl apply -f metrics-server-v0.7.2.yaml && kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--kubelet-insecure-tls"}]'
 ```
 
 **Install Ingress Controller**
 
 ```shell
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+$ kubectl apply -f ingress-nginx-v1.8.2.yaml
 ```
 
-**Install Helm**
+**Install Helm (optional)**
 
 SNAP:
 ```shell
@@ -232,7 +235,7 @@ $ ./up-dev-compose.sh
 ```
 *Note: you don't need to have Java installed because the source code is built inside the containers.*
 
-**Option 3: Using Kubernetes Helm charts**
+**Option 3: Using Helm charts for Kubernetes**
 
 1. This option assumes you have enabled Kubernetes mode as describes in Step 1.1.
 1. Navigate to the `<root>/kubernetes/prod-with-helm`
@@ -240,6 +243,16 @@ $ ./up-dev-compose.sh
 
 ```shell
 $ helm install micros . -n micros
+```
+
+**Option 4: Using standalone Kubernetes (without Helm)**
+
+1. This option assumes you have enabled Kubernetes mode as describes in Step 1.1.
+1. Navigate to the `<root>/kubernetes/prod-without-helm`
+1. Run
+
+```shell
+$ kubectl apply -f . --recursive
 ```
 
 ### Step 4. Play With the Project

@@ -5,15 +5,11 @@ metadata:
   namespace: {{ .Values.microservice.namespace }}
 data:
   tempo-local.yaml: |
-    server:
-      http_listen_port: {{ .Values.workload.ports.queryTraces }}
-
-    distributor:
-      receivers:
-        zipkin:
-
-    storage:
-      trace:
-        backend: local
-        local:
-          path: /tmp/tempo/blocks
+    {{- $tempo := $.Files.Get "conf/tempo-local.yaml" }}
+    {{- if not $tempo }}
+    {{- fail "conf/tempo-local.yaml not found!" }}
+    {{- end }}
+    # since tempo-local.yaml contains templating placeholders they need to be interpolated
+    # explicitly, because calling $.Files.Get does not do that by default.
+    # tpl will apply the templating engine
+    {{- tpl ($tempo) . | nindent 4 }}

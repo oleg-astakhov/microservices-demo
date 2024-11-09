@@ -1,0 +1,12 @@
+server:
+  http_listen_port: {{ .Values.workload.ports.queryTraces }}
+
+distributor:
+  receivers:
+    zipkin:
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/tempo/blocks

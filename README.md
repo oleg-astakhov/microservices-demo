@@ -50,7 +50,7 @@ First of all, the system is split into 6 microservices:
 
 As well as 4 infrastructural components that out system integrates with:
 - Metrics backend (Prometheus)
-- Centralized logging backend (Grafana Loki)
+- Centralized logging backend (Grafana Loki + FluentBit)
 - Observability visualization (Grafana)
 - Tracing backend (Grafana Tempo)
 

@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 plugins {
 	id 'java'
 	id 'groovy'
@@ -65,11 +67,11 @@ configurations {
 }
 
 
-tasks.withType(JavaExec) {
+tasks.withType(JavaExec).configureEach {
 	systemProperty 'reactor.schedulers.defaultBoundedElasticOnVirtualThreads', 'true'
 }
 
-tasks.withType(org.springframework.boot.gradle.tasks.run.BootRun) {
+tasks.withType(BootRun).configureEach {
 	systemProperty 'reactor.schedulers.defaultBoundedElasticOnVirtualThreads', 'true'
 }
 
